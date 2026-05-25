@@ -1,0 +1,33 @@
+{
+  "message": "Les données fournies sont invalides.",
+  "errors": {
+    "name": [
+      "Le champ nom est obligatoire."
+    ],
+    "email": [
+      "L'adresse e-mail doit être une adresse e-mail valide.",
+      "Cette adresse e-mail est déjà utilisée."
+    ],
+    "phone": [
+      "Le format du téléphone est invalide (ex. : 06 12 34 56 78)."
+    ],
+    "role": [
+      "Le rôle sélectionné est invalide."
+    ],
+    "salary": [
+      "Le salaire doit être un nombre supérieur à 0."
+    ],
+    "active": [
+      "Le champ actif doit être vrai ou faux."
+    ],
+    "members.0.name": [
+      "Le nom du membre est obligatoire."
+    ],
+    "members.0.role": [
+      "Veuillez choisir un rôle pour ce membre."
+    ],
+    "members.1.salary": [
+      "Le salaire doit être supérieur à 0."
+    ]
+  }
+}
