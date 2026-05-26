@@ -1,6 +1,6 @@
 {
   "name": "@momoledev/alpine-components",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Composants Alpine.js réutilisables : Select, Dropdown, InputText, InputTags, Switch, Slider, Form, InputMask, Toast",
   "main": "dist/index.umd.js",
   "module": "dist/index.mjs",
@@ -8,7 +8,8 @@
     ".": {
       "import": "./dist/index.mjs",
       "require": "./dist/index.umd.js"
-    }
+    },
+    "./style": "./dist/style.css"
   },
   "files": [
     "dist"

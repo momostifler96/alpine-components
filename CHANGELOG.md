@@ -5,6 +5,24 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versi
 
 ---
 
+## [1.0.7] — 2026-05-26
+
+### Added
+- `dist/style.css` — feuille de style prédéfinie optionnelle avec classes `ap-*` pour tous les composants
+  - Design tokens CSS (`--ap-primary`, `--ap-border`, `--ap-radius`, …) personnalisables via `:root`
+  - **apInputText** : `.ap-input`, `.ap-input-wrapper`, `.ap-input-addon`, `.ap-input-action`
+  - **apSelect** : `.ap-select`, `.ap-select-trigger`, `.ap-select-panel`, `.ap-select-option`, `.ap-select-tag`, `.ap-select-search`, `.ap-select-clear`
+  - **apDropdown** : `.ap-dropdown`, `.ap-dropdown-panel`, `.ap-dropdown-item`, `.ap-dropdown-divider`, `.ap-dropdown-header`
+  - **apInputTags** : `.ap-tags-wrapper`, `.ap-tag`, `.ap-tag-label`, `.ap-tag-remove`, `.ap-tags-input`
+  - **apSwitch** : `.ap-switch`, `.ap-switch-thumb`
+  - **apSlider** : `.ap-slider`, `.ap-slider-input`, `.ap-slider-tooltip`, `.ap-slider-labels`
+  - **apInputMask** : `.ap-mask-wrapper`, `.ap-mask-input`, `.ap-mask-country-btn`, `.ap-mask-country-panel`, `.ap-mask-country-option`
+  - **apForm** : `.ap-form`, `.ap-form-field`, `.ap-form-label`, `.ap-form-error`, `.ap-form-hint`, `.ap-form-success`, `.ap-form-submit`
+  - **Toast** : `.ap-toast-container`, `.ap-toast`, `.ap-toast-success/error/warning/info`, `.ap-toast-title`, `.ap-toast-message`, `.ap-toast-action`, `.ap-toast-dismiss`
+- Export `"./style"` dans `package.json` — importable via `import '@momoledev/alpine-components/style'`
+
+---
+
 ## [1.0.6] — 2026-05-26
 
 ### Fixed
@@ -49,6 +67,7 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versi
 - `src/data/catalog.js` — métadonnées des composants pour la landing et la documentation
 - Playground interactif (`index.html`) et documentation navigateur (`documentation.html`)
 
+[1.0.7]: https://github.com/momostifler96/alpine-components/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/momostifler96/alpine-components/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/momostifler96/alpine-components/compare/v1.0.0...v1.0.5
 [1.0.0]: https://github.com/momostifler96/alpine-components/releases/tag/v1.0.0
