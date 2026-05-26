@@ -4,12 +4,14 @@
  * Config :
  *   value      valeur initiale (brute)
  *   mask       preset string | { pattern } | { regex, hint }
+ *   maxDigits  nb max de chiffres pour mask:'number' (défaut 8)
  *   placeholder
  *   prefix / suffix — comme apInputText
  *   disabled
  *   country    code ISO initial pour mask: 'phone-country' (défaut FR)
  *
  * Presets (mask: 'name') :
+ *   number        · chiffres uniquement, limité à maxDigits (défaut 8)
  *   phone-fr      · 06 12 34 56 78
  *   phone-intl    · +33 6 12 34 56 78
  *   phone-country · drapeau + indicatif + numéro national (émet pays + numéro)
@@ -165,8 +167,19 @@ export default function apInputMask(config = {}) {
   const maskPat = typeof config.mask === 'object' && config.mask?.pattern ? config.mask.pattern : null;
   const maskRx = typeof config.mask === 'object' && config.mask?.regex ? config.mask.regex : null;
   const rxHint = config.mask?.hint ?? null;
-  const preset = maskKey && maskKey !== 'phone-country' ? PRESETS[maskKey] : null;
   const isPhoneCountry = maskKey === 'phone-country';
+  const maxDigits = config.maxDigits ?? 8;
+
+  const numberPreset = maskKey === 'number' ? {
+    inputmode: 'numeric',
+    placeholder: config.placeholder ?? '',
+    live: true,
+    format: raw => raw.replace(/\D/g, '').slice(0, maxDigits),
+    toRaw: s => s.replace(/\D/g, ''),
+    validate: v => !v || v.length <= maxDigits,
+  } : null;
+
+  const preset = maskKey && !isPhoneCountry ? (numberPreset ?? PRESETS[maskKey]) : null;
 
   const initialCountry =
     getCountryByCode(config.country ?? 'FR') ?? PHONE_COUNTRIES[0];

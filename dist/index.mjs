@@ -1,4 +1,4 @@
-function R(t = {}) {
+function k(t = {}) {
   return {
     open: !1,
     search: "",
@@ -21,14 +21,14 @@ function R(t = {}) {
       if (!this.search.trim()) return this.options;
       const e = this.search.toLowerCase();
       return this.options.filter(
-        (s) => String(s.label ?? s.value).toLowerCase().includes(e)
+        (i) => String(i.label ?? i.value).toLowerCase().includes(e)
       );
     },
     get selectedOption() {
       return this.multiple ? null : this.options.find((e) => e.value === this.value) ?? null;
     },
     get selectedOptions() {
-      return this.multiple ? (this.value ?? []).map((e) => this.options.find((s) => s.value === e)).filter(Boolean) : [];
+      return this.multiple ? (this.value ?? []).map((e) => this.options.find((i) => i.value === e)).filter(Boolean) : [];
     },
     get hasValue() {
       return this.multiple ? (this.value ?? []).length > 0 : this.value !== null && this.value !== void 0 && this.value !== "";
@@ -40,13 +40,13 @@ function R(t = {}) {
     select(e) {
       if (!e.disabled)
         if (this.multiple) {
-          const s = this.value ?? [];
-          this.value = s.includes(e.value) ? s.filter((i) => i !== e.value) : this.canAddMore ? [...s, e.value] : s;
+          const i = this.value ?? [];
+          this.value = i.includes(e.value) ? i.filter((s) => s !== e.value) : this.canAddMore ? [...i, e.value] : i;
         } else
           this.value = e.value, this.open = !1, this.search = "";
     },
-    removeTag(e, s) {
-      s == null || s.stopPropagation(), this.value = (this.value ?? []).filter((i) => i !== e);
+    removeTag(e, i) {
+      i == null || i.stopPropagation(), this.value = (this.value ?? []).filter((s) => s !== e);
     },
     clear(e) {
       e == null || e.stopPropagation(), this.value = this.multiple ? [] : null;
@@ -64,14 +64,14 @@ function R(t = {}) {
       this.open = !1, this.search = "";
     },
     // ── Prefix/Suffix renderer ────────────────────────────────────────────────
-    renderItem(e, s = "sm") {
+    renderItem(e, i = "sm") {
       if (!e) return "";
-      const i = { xs: 14, sm: 16, md: 20 }[s] ?? 16;
+      const s = { xs: 14, sm: 16, md: 20 }[i] ?? 16;
       switch (e.type) {
         case "image":
-          return `<img src="${e.src}" alt="${e.alt ?? ""}" width="${i}" height="${i}" class="rounded object-cover shrink-0 inline-block" style="min-width:${i}px;height:${i}px">`;
+          return `<img src="${e.src}" alt="${e.alt ?? ""}" width="${s}" height="${s}" class="rounded object-cover shrink-0 inline-block" style="min-width:${s}px;height:${s}px">`;
         case "icon":
-          return `<span class="inline-flex items-center justify-center shrink-0" style="width:${i}px;height:${i}px">${e.svg}</span>`;
+          return `<span class="inline-flex items-center justify-center shrink-0" style="width:${s}px;height:${s}px">${e.svg}</span>`;
         case "text":
           return `<span class="text-sm text-gray-500 shrink-0 leading-none">${e.content}</span>`;
         case "badge": {
@@ -103,7 +103,7 @@ function R(t = {}) {
     }
   };
 }
-function T(t = {}) {
+function C(t = {}) {
   return {
     open: !1,
     disabled: t.disabled ?? !1,
@@ -158,18 +158,18 @@ function T(t = {}) {
      * Recalcule la position du panneau pour qu'il reste visible dans le viewport.
      */
     updatePosition() {
-      const e = this.$refs.trigger ?? this.$el.querySelector("[data-dropdown-trigger]"), s = this.$refs.panel ?? this.$el.querySelector("[data-dropdown-panel]");
-      if (!e || !s) return;
-      const i = 6, l = e.getBoundingClientRect(), a = s.offsetWidth || s.scrollWidth || 192, o = s.offsetHeight || s.scrollHeight || 120, d = window.innerWidth, c = window.innerHeight, h = 8;
+      const e = this.$refs.trigger ?? this.$el.querySelector("[data-dropdown-trigger]"), i = this.$refs.panel ?? this.$el.querySelector("[data-dropdown-panel]");
+      if (!e || !i) return;
+      const s = 6, l = e.getBoundingClientRect(), o = i.offsetWidth || i.scrollWidth || 192, h = i.offsetHeight || i.scrollHeight || 120, p = window.innerWidth, r = window.innerHeight, u = 8;
       let m = this.placement.startsWith("top") ? "top" : "bottom", y = this.placement.endsWith("end") ? "end" : "start";
-      m === "bottom" && l.bottom + o + i > c - h && (m = "top"), m === "top" && l.top - o - i < h && (m = "bottom"), y === "start" && l.left + a > d - h && (y = "end"), y === "end" && l.right - a < h && (y = "start"), this.resolvedPlacement = `${m}-${y}`;
-      let n, r;
-      m === "bottom" ? n = l.bottom + i : n = l.top - o - i, y === "start" ? r = l.left : r = l.right - a, r = Math.max(h, Math.min(r, d - a - h)), n = Math.max(h, Math.min(n, c - o - h));
-      const u = {
-        top: `${Math.round(n)}px`,
-        left: `${Math.round(r)}px`
+      m === "bottom" && l.bottom + h + s > r - u && (m = "top"), m === "top" && l.top - h - s < u && (m = "bottom"), y === "start" && l.left + o > p - u && (y = "end"), y === "end" && l.right - o < u && (y = "start"), this.resolvedPlacement = `${m}-${y}`;
+      let w, b;
+      m === "bottom" ? w = l.bottom + s : w = l.top - h - s, y === "start" ? b = l.left : b = l.right - o, b = Math.max(u, Math.min(b, p - o - u)), w = Math.max(u, Math.min(w, r - h - u));
+      const a = {
+        top: `${Math.round(w)}px`,
+        left: `${Math.round(b)}px`
       };
-      this.widthMode === "trigger" && (u.width = `${Math.round(l.width)}px`), this.panelStyle = u;
+      this.widthMode === "trigger" && (a.width = `${Math.round(l.width)}px`), this.panelStyle = a;
     },
     /** @private */
     _bindReposition() {
@@ -181,7 +181,7 @@ function T(t = {}) {
     }
   };
 }
-function k(t = {}) {
+function _(t = {}) {
   return {
     value: t.value ?? "",
     type: t.type ?? "text",
@@ -216,7 +216,7 @@ function k(t = {}) {
     togglePassword() {
       this.showPassword = !this.showPassword;
     },
-    renderAddon(e, s = "prefix") {
+    renderAddon(e, i = "prefix") {
       if (!e) return "";
       switch (e.type) {
         case "icon":
@@ -229,7 +229,7 @@ function k(t = {}) {
     }
   };
 }
-function C(t = {}) {
+function N(t = {}) {
   return {
     tags: t.tags ? [...t.tags] : [],
     input: "",
@@ -251,17 +251,17 @@ function C(t = {}) {
       return this.maxTags === null || this.tags.length < this.maxTags;
     },
     addTag(e) {
-      const s = String(e ?? "").trim();
-      if (!(!s || !this.canAdd)) {
-        if (!this.allowDuplicates && this.tags.includes(s)) {
+      const i = String(e ?? "").trim();
+      if (!(!i || !this.canAdd)) {
+        if (!this.allowDuplicates && this.tags.includes(i)) {
           this.input = "";
           return;
         }
-        this.tags = [...this.tags, s], this.input = "";
+        this.tags = [...this.tags, i], this.input = "";
       }
     },
     removeTag(e) {
-      this.tags = this.tags.filter((s, i) => i !== e);
+      this.tags = this.tags.filter((i, s) => s !== e);
     },
     onKeydown(e) {
       if (this.separators.includes(e.key)) {
@@ -272,12 +272,12 @@ function C(t = {}) {
     },
     onPaste(e) {
       var l;
-      const i = (((l = e.clipboardData) == null ? void 0 : l.getData("text")) ?? "").split(/[,\n\t]+/).map((a) => a.trim()).filter(Boolean);
-      i.length > 1 && (e.preventDefault(), i.forEach((a) => this.addTag(a)));
+      const s = (((l = e.clipboardData) == null ? void 0 : l.getData("text")) ?? "").split(/[,\n\t]+/).map((o) => o.trim()).filter(Boolean);
+      s.length > 1 && (e.preventDefault(), s.forEach((o) => this.addTag(o)));
     }
   };
 }
-function _(t = {}) {
+function D(t = {}) {
   return {
     value: t.value ?? !1,
     disabled: t.disabled ?? !1,
@@ -291,7 +291,7 @@ function _(t = {}) {
     }
   };
 }
-function N(t = {}) {
+function M(t = {}) {
   return {
     min: t.min ?? 0,
     max: t.max ?? 100,
@@ -318,7 +318,7 @@ function N(t = {}) {
     }
   };
 }
-function D(t = {}) {
+function O(t = {}) {
   const e = JSON.parse(JSON.stringify(t.data ?? {}));
   return {
     data: t.data ? { ...t.data } : {},
@@ -326,53 +326,53 @@ function D(t = {}) {
     loading: !1,
     success: !1,
     // ── Error helpers ─────────────────────────────────────────────────────────
-    setErrors(s) {
-      const i = {};
-      for (const [l, a] of Object.entries(s ?? {}))
-        i[l] = Array.isArray(a) ? a : [a];
-      this.errors = i;
+    setErrors(i) {
+      const s = {};
+      for (const [l, o] of Object.entries(i ?? {}))
+        s[l] = Array.isArray(o) ? o : [o];
+      this.errors = s;
     },
-    hasError(s) {
-      var i;
-      return (((i = this.errors[s]) == null ? void 0 : i.length) ?? 0) > 0;
+    hasError(i) {
+      var s;
+      return (((s = this.errors[i]) == null ? void 0 : s.length) ?? 0) > 0;
     },
-    getError(s) {
-      var i;
-      return ((i = this.errors[s]) == null ? void 0 : i[0]) ?? "";
+    getError(i) {
+      var s;
+      return ((s = this.errors[i]) == null ? void 0 : s[0]) ?? "";
     },
-    clearError(s) {
-      if (this.errors[s]) {
-        const i = { ...this.errors };
-        delete i[s], this.errors = i;
+    clearError(i) {
+      if (this.errors[i]) {
+        const s = { ...this.errors };
+        delete s[i], this.errors = s;
       }
     },
     clearErrors() {
       this.errors = {};
     },
     // ── Submission ────────────────────────────────────────────────────────────
-    async submit(s, i = {}) {
+    async submit(i, s = {}) {
       if (this.loading) return { ok: !1 };
       this.loading = !0, this.success = !1;
       try {
-        const l = (i.method ?? "POST").toUpperCase(), a = i.transform ? i.transform(this.data) : this.data, o = {
+        const l = (s.method ?? "POST").toUpperCase(), o = s.transform ? s.transform(this.data) : this.data, h = {
           "Content-Type": "application/json",
           Accept: "application/json",
-          ...i.headers
-        }, d = document.querySelector('meta[name="csrf-token"]');
-        d && (o["X-CSRF-TOKEN"] = d.content);
-        const c = await fetch(s, {
+          ...s.headers
+        }, p = document.querySelector('meta[name="csrf-token"]');
+        p && (h["X-CSRF-TOKEN"] = p.content);
+        const r = await fetch(i, {
           method: l,
-          headers: o,
-          body: l !== "GET" ? JSON.stringify(a) : void 0,
-          signal: i.signal
+          headers: h,
+          body: l !== "GET" ? JSON.stringify(o) : void 0,
+          signal: s.signal
         });
-        let h;
+        let u;
         try {
-          h = await c.json();
+          u = await r.json();
         } catch {
-          h = null;
+          u = null;
         }
-        return c.ok ? (this.errors = {}, this.success = !0, this.$dispatch("form:success", { status: c.status, data: h }), { ok: !0, status: c.status, data: h }) : (c.status === 422 && (h != null && h.errors) && this.setErrors(h.errors), this.$dispatch("form:error", { status: c.status, data: h }), { ok: !1, status: c.status, data: h });
+        return r.ok ? (this.errors = {}, this.success = !0, this.$dispatch("form:success", { status: r.status, data: u }), { ok: !0, status: r.status, data: u }) : (r.status === 422 && (u != null && u.errors) && this.setErrors(u.errors), this.$dispatch("form:error", { status: r.status, data: u }), { ok: !1, status: r.status, data: u });
       } catch (l) {
         return l.name !== "AbortError" && this.$dispatch("form:error", { status: 0, error: l.message }), { ok: !1, error: l.message };
       } finally {
@@ -385,7 +385,7 @@ function D(t = {}) {
     }
   };
 }
-const S = [
+const R = [
   { code: "FR", name: "France", dial: "+33", flag: "🇫🇷", digits: 9 },
   { code: "BE", name: "Belgique", dial: "+32", flag: "🇧🇪", digits: 9 },
   { code: "CH", name: "Suisse", dial: "+41", flag: "🇨🇭", digits: 9 },
@@ -402,33 +402,33 @@ const S = [
   { code: "TN", name: "Tunisie", dial: "+216", flag: "🇹🇳", digits: 8 },
   { code: "SN", name: "Sénégal", dial: "+221", flag: "🇸🇳", digits: 9 }
 ];
-function M(t, e = S) {
-  return e.find((s) => s.code === t);
+function E(t, e = R) {
+  return e.find((i) => i.code === t);
 }
-function O(t) {
+function F(t) {
   return String(t).replace(/[\u00a0\u202f]/g, " ");
 }
-function E(t) {
+function I(t) {
   return t.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
-function $(t, e = "fr-FR") {
+function v(t, e = "fr-FR") {
   if (t == null || t === "") return "";
-  const s = e === "fr-FR" ? "," : ".", i = String(t).replace(/\s/g, ""), l = Math.max(i.lastIndexOf(","), i.lastIndexOf("."));
-  let a = "", o = "";
-  if (l >= 0 ? (a = i.slice(0, l).replace(/[^\d]/g, ""), o = i.slice(l + 1).replace(/[^\d]/g, "").slice(0, 2)) : a = i.replace(/[^\d]/g, ""), !a && !o) return "";
-  const d = a ? E(a) : "0";
-  return o !== "" || l >= 0 && i.endsWith(s) ? `${d}${s}${o}` : d;
+  const i = e === "fr-FR" ? "," : ".", s = String(t).replace(/\s/g, ""), l = Math.max(s.lastIndexOf(","), s.lastIndexOf("."));
+  let o = "", h = "";
+  if (l >= 0 ? (o = s.slice(0, l).replace(/[^\d]/g, ""), h = s.slice(l + 1).replace(/[^\d]/g, "").slice(0, 2)) : o = s.replace(/[^\d]/g, ""), !o && !h) return "";
+  const p = o ? I(o) : "0";
+  return h !== "" || l >= 0 && (s.endsWith(",") || s.endsWith(".")) ? `${p}${i}${h}` : p;
 }
-function P(t, e = "fr-FR") {
-  const s = parseFloat(String(t).replace(/\s/g, "").replace(",", "."));
-  if (isNaN(s)) return "";
-  const i = new Intl.NumberFormat(e, {
+function T(t, e = "fr-FR") {
+  const i = parseFloat(String(t).replace(/\s/g, "").replace(",", "."));
+  if (isNaN(i)) return "";
+  const s = new Intl.NumberFormat(e, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-  }).format(s);
-  return O(i);
+  }).format(i);
+  return F(s);
 }
-const F = {
+const A = {
   "phone-fr": {
     inputmode: "tel",
     placeholder: "06 12 34 56 78",
@@ -437,7 +437,7 @@ const F = {
       const e = t.replace(/\D/g, "").slice(0, 10);
       return e ? e.replace(
         /^(\d{1,2})(\d{0,2})(\d{0,2})(\d{0,2})(\d{0,2})$/,
-        (s, i, l, a, o, d) => [i, l, a, o, d].filter(Boolean).join(" ")
+        (i, s, l, o, h, p) => [s, l, o, h, p].filter(Boolean).join(" ")
       ) : "";
     },
     toRaw: (t) => t.replace(/\D/g, ""),
@@ -448,13 +448,13 @@ const F = {
     placeholder: "+33 6 12 34 56 78",
     live: !0,
     format(t) {
-      const e = t.trimStart().startsWith("+"), s = t.replace(/\D/g, "").slice(0, 15);
-      if (!s) return e ? "+" : "";
-      const i = s.replace(
+      const e = t.trimStart().startsWith("+"), i = t.replace(/\D/g, "").slice(0, 15);
+      if (!i) return e ? "+" : "";
+      const s = i.replace(
         /^(\d{1,3})(\d{0,3})(\d{0,3})(\d{0,4})$/,
-        (l, a, o, d, c) => [a, o, d, c].filter(Boolean).join(" ")
+        (l, o, h, p, r) => [o, h, p, r].filter(Boolean).join(" ")
       );
-      return (e ? "+" : "") + i;
+      return (e ? "+" : "") + s;
     },
     toRaw: (t) => t.replace(/[\s]/g, ""),
     validate: (t) => /^\+?[1-9]\d{6,14}$/.test(t.replace(/[\s\-().]/g, ""))
@@ -465,10 +465,10 @@ const F = {
     locale: "fr-FR",
     live: !0,
     format(t, e) {
-      return t === "" || t == null ? "" : e ? $(t, "fr-FR") : P(t, "fr-FR");
+      return t === "" || t == null ? "" : e ? v(t, "fr-FR") : T(t, "fr-FR");
     },
     focusDisplay(t) {
-      return t ? $(String(t).replace(".", ","), "fr-FR") : "";
+      return t ? v(String(t).replace(".", ","), "fr-FR") : "";
     },
     toRaw: (t) => String(t).replace(/\s/g, "").replace(",", "."),
     validate: (t) => t === "" || !isNaN(parseFloat(t))
@@ -479,10 +479,10 @@ const F = {
     locale: "en-US",
     live: !0,
     format(t, e) {
-      return t === "" || t == null ? "" : e ? $(t, "en-US") : P(t, "en-US");
+      return t === "" || t == null ? "" : e ? v(t, "en-US") : T(t, "en-US");
     },
     focusDisplay(t) {
-      return t ? $(String(t ?? ""), "en-US") : "";
+      return t ? v(String(t ?? ""), "en-US") : "";
     },
     toRaw: (t) => String(t).replace(/\s/g, "").replace(/,/g, ""),
     validate: (t) => t === "" || !isNaN(parseFloat(t))
@@ -507,8 +507,8 @@ const F = {
     validate(t) {
       const e = t.replace(/\D/g, "");
       if (e.length !== 8) return !1;
-      const s = +e.slice(0, 2), i = +e.slice(2, 4), l = +e.slice(4);
-      return s >= 1 && s <= 31 && i >= 1 && i <= 12 && l >= 1900;
+      const i = +e.slice(0, 2), s = +e.slice(2, 4), l = +e.slice(4);
+      return i >= 1 && i <= 31 && s >= 1 && s <= 12 && l >= 1900;
     }
   },
   siret: {
@@ -523,16 +523,23 @@ const F = {
     validate: (t) => t.replace(/\D/g, "").length === 14
   }
 };
-function v(t) {
+function S(t) {
   return t ? t.replace(/(\d{2})(?=\d)/g, "$1 ").trim() : "";
 }
-function I(t = {}) {
-  var h, m, y;
-  const e = typeof t.mask == "string" ? t.mask : null, s = typeof t.mask == "object" && ((h = t.mask) != null && h.pattern) ? t.mask.pattern : null, i = typeof t.mask == "object" && ((m = t.mask) != null && m.regex) ? t.mask.regex : null, l = ((y = t.mask) == null ? void 0 : y.hint) ?? null, a = e && e !== "phone-country" ? F[e] : null, o = e === "phone-country", d = M(t.country ?? "FR") ?? S[0], c = {
+function B(t = {}) {
+  var y, w, b;
+  const e = typeof t.mask == "string" ? t.mask : null, i = typeof t.mask == "object" && ((y = t.mask) != null && y.pattern) ? t.mask.pattern : null, s = typeof t.mask == "object" && ((w = t.mask) != null && w.regex) ? t.mask.regex : null, l = ((b = t.mask) == null ? void 0 : b.hint) ?? null, o = e === "phone-country", h = t.maxDigits ?? 8, p = e === "number" ? {
+    inputmode: "numeric",
+    placeholder: t.placeholder ?? "",
+    live: !0,
+    format: (a) => a.replace(/\D/g, "").slice(0, h),
+    toRaw: (a) => a.replace(/\D/g, ""),
+    validate: (a) => !a || a.length <= h
+  } : null, r = e && !o ? p ?? A[e] : null, u = E(t.country ?? "FR") ?? R[0], m = {
     raw: String(t.value ?? ""),
     display: "",
     value: String(t.value ?? ""),
-    placeholder: t.placeholder ?? (a == null ? void 0 : a.placeholder) ?? "",
+    placeholder: t.placeholder ?? (r == null ? void 0 : r.placeholder) ?? "",
     disabled: t.disabled ?? !1,
     prefix: t.prefix ?? null,
     suffix: t.suffix ?? null,
@@ -543,89 +550,89 @@ function I(t = {}) {
         this._initPhoneCountry();
         return;
       }
-      this.display = this._fmt(this.raw, !1), this.$watch("value", (n) => {
-        const r = String(n ?? "");
-        r !== this.raw && (this.raw = r, this.display = this._fmt(r, this.focused));
+      this.display = this._fmt(this.raw, !1), this.$watch("value", (a) => {
+        const n = String(a ?? "");
+        n !== this.raw && (this.raw = n, this.display = this._fmt(n, this.focused));
       });
     },
     get inputmode() {
-      return o ? "tel" : (a == null ? void 0 : a.inputmode) ?? "text";
+      return o ? "tel" : (r == null ? void 0 : r.inputmode) ?? "text";
     },
     get isValid() {
-      var n, r;
+      var a, n;
       if (o) {
         if (!this.phoneNumber) return !0;
-        const u = this.phoneNumber.length;
-        return u >= Math.min(6, ((n = this.country) == null ? void 0 : n.digits) ?? 9) && u <= (((r = this.country) == null ? void 0 : r.digits) ?? 15);
+        const d = this.phoneNumber.length;
+        return d >= Math.min(6, ((a = this.country) == null ? void 0 : a.digits) ?? 9) && d <= (((n = this.country) == null ? void 0 : n.digits) ?? 15);
       }
-      return this.raw ? a != null && a.validate ? a.validate(this.display) : i ? new RegExp(i).test(this.raw) : !0 : !0;
+      return this.raw ? r != null && r.validate ? r.validate(this.display) : s ? new RegExp(s).test(this.raw) : !0 : !0;
     },
-    _fmt(n, r) {
-      return a ? a.format(n, r) : s ? this._patternMask(n, s) : n;
+    _fmt(a, n) {
+      return r ? r.format(a, n) : i ? this._patternMask(a, i) : a;
     },
-    _toRaw(n) {
-      return a != null && a.toRaw ? a.toRaw(n) : s ? n.replace(/[^A-Z0-9]/gi, "") : n;
+    _toRaw(a) {
+      return r != null && r.toRaw ? r.toRaw(a) : i ? a.replace(/[^A-Z0-9]/gi, "") : a;
     },
-    _patternMask(n, r) {
-      const u = n.replace(/[^A-Z0-9]/gi, "");
-      let p = "", f = 0;
-      for (let b = 0; b < r.length && f < u.length; b++) {
-        const w = r[b], g = u[f];
-        if (w === "#") {
+    _patternMask(a, n) {
+      const d = a.replace(/[^A-Z0-9]/gi, "");
+      let c = "", f = 0;
+      for (let x = 0; x < n.length && f < d.length; x++) {
+        const $ = n[x], g = d[f];
+        if ($ === "#") {
           if (!/\d/.test(g)) break;
-          p += g, f++;
-        } else if (w === "A") {
+          c += g, f++;
+        } else if ($ === "A") {
           if (!/[A-Za-z]/.test(g)) break;
-          p += g.toUpperCase(), f++;
-        } else w === "*" ? (p += g.toUpperCase(), f++) : (p += w, g === w && f++);
+          c += g.toUpperCase(), f++;
+        } else $ === "*" ? (c += g.toUpperCase(), f++) : (c += $, g === $ && f++);
       }
-      return p;
+      return c;
     },
     onFocus() {
-      this.focused = !0, a != null && a.focusDisplay && (this.display = a.focusDisplay(this.raw), this.$nextTick(() => {
-        var n;
-        return (n = this.$refs.input) == null ? void 0 : n.select();
+      this.focused = !0, r != null && r.focusDisplay && (this.display = r.focusDisplay(this.raw), this.$nextTick(() => {
+        var a;
+        return (a = this.$refs.input) == null ? void 0 : a.select();
       }));
     },
-    onInput(n) {
-      const r = n.target, u = this.display.length;
-      if (a && a.live === !1 ? (this.display = r.value, this.raw = this._toRaw(r.value)) : (this.raw = this._toRaw(r.value), this.display = this._fmt(this.raw, !0)), this.value = this.raw, this.$dispatch("input", this.raw), a != null && a.live || s) {
-        const p = this.display.length - u;
-        p > 0 && this.$nextTick(() => {
-          if (!r.isConnected) return;
-          const f = Math.min(r.selectionStart + p, this.display.length);
-          r.setSelectionRange(f, f);
+    onInput(a) {
+      const n = a.target, d = this.display.length;
+      if (r && r.live === !1 ? (this.display = n.value, this.raw = this._toRaw(n.value)) : (this.raw = this._toRaw(n.value), this.display = this._fmt(this.raw, !0)), this.value = this.raw, this.$dispatch("input", this.raw), r != null && r.live || i) {
+        const c = this.display.length - d;
+        c > 0 && this.$nextTick(() => {
+          if (!n.isConnected) return;
+          const f = Math.min(n.selectionStart + c, this.display.length);
+          n.setSelectionRange(f, f);
         });
       }
     },
     onBlur() {
-      if (this.focused = !1, a != null && a.live) {
+      if (this.focused = !1, r != null && r.live) {
         if (e != null && e.startsWith("money-")) {
-          const n = this._toRaw(this.display);
+          const a = this._toRaw(this.display);
           if (!String(this.display).trim()) {
             this.raw = "", this.display = "", this.value = "", this.$dispatch("change", "");
             return;
           }
-          const r = parseFloat(String(n).replace(",", "."));
-          isNaN(r) || (this.raw = String(r), this.display = this._fmt(this.raw, !1), this.value = this.raw, this.$dispatch("input", this.raw), this.$dispatch("change", this.raw));
+          const n = parseFloat(String(a).replace(",", "."));
+          isNaN(n) || (this.raw = String(n), this.display = this._fmt(this.raw, !1), this.value = this.raw, this.$dispatch("input", this.raw), this.$dispatch("change", this.raw));
           return;
         }
         this.$dispatch("change", this.raw);
         return;
       }
-      if (a && !a.live) {
-        const n = this._toRaw(this.display), r = parseFloat(n.replace(",", "."));
-        isNaN(r) ? (this.raw = "", this.display = "", this.value = "") : (this.raw = String(r), this.display = this._fmt(this.raw, !1), this.value = this.raw, this.$dispatch("input", this.raw), this.$dispatch("change", this.raw));
+      if (r && !r.live) {
+        const a = this._toRaw(this.display), n = parseFloat(a.replace(",", "."));
+        isNaN(n) ? (this.raw = "", this.display = "", this.value = "") : (this.raw = String(n), this.display = this._fmt(this.raw, !1), this.value = this.raw, this.$dispatch("input", this.raw), this.$dispatch("change", this.raw));
       } else
         this.$dispatch("change", this.raw);
     }
   };
   return o ? {
-    ...c,
-    countries: t.countries ?? S,
-    countryCode: d.code,
-    country: d,
-    dialCode: d.dial,
+    ...m,
+    countries: t.countries ?? R,
+    countryCode: u.code,
+    country: u,
+    dialCode: u.dial,
     phoneNumber: "",
     fullPhone: "",
     countryOpen: !1,
@@ -635,14 +642,14 @@ function I(t = {}) {
      * @private
      */
     _initPhoneCountry() {
-      const n = String(t.value ?? "").replace(/\D/g, "");
-      if (n) {
-        const r = this.country.dial.replace(/\D/g, "");
-        n.startsWith(r) ? this.phoneNumber = n.slice(r.length) : this.phoneNumber = n;
+      const a = String(t.value ?? "").replace(/\D/g, "");
+      if (a) {
+        const n = this.country.dial.replace(/\D/g, "");
+        a.startsWith(n) ? this.phoneNumber = a.slice(n.length) : this.phoneNumber = a;
       }
-      this.display = v(this.phoneNumber), this._syncPhoneOutputs(), this.$watch("value", (r) => {
-        const u = String(r ?? "").replace(/\s/g, "");
-        u && u !== this.fullPhone && (this.fullPhone = u);
+      this.display = S(this.phoneNumber), this._syncPhoneOutputs(), this.$watch("value", (n) => {
+        const d = String(n ?? "").replace(/\s/g, "");
+        d && d !== this.fullPhone && (this.fullPhone = d);
       });
     },
     /**
@@ -669,10 +676,10 @@ function I(t = {}) {
      *
      * @param {import('../data/phoneCountries.js').PhoneCountry} c
      */
-    selectCountry(n) {
-      this.country = n, this.countryCode = n.code, this.dialCode = n.dial, this.countryOpen = !1;
-      const r = n.digits ?? 15;
-      this.phoneNumber.length > r && (this.phoneNumber = this.phoneNumber.slice(0, r), this.display = v(this.phoneNumber)), this._syncPhoneOutputs(), this.$dispatch("country-change", {
+    selectCountry(a) {
+      this.country = a, this.countryCode = a.code, this.dialCode = a.dial, this.countryOpen = !1;
+      const n = a.digits ?? 15;
+      this.phoneNumber.length > n && (this.phoneNumber = this.phoneNumber.slice(0, n), this.display = S(this.phoneNumber)), this._syncPhoneOutputs(), this.$dispatch("country-change", {
         country: this.countryCode,
         dialCode: this.dialCode
       });
@@ -682,10 +689,10 @@ function I(t = {}) {
      *
      * @param {Event} event
      */
-    onPhoneInput(n) {
-      var p;
-      const r = ((p = this.country) == null ? void 0 : p.digits) ?? 15, u = n.target.value.replace(/\D/g, "").slice(0, r);
-      this.phoneNumber = u, this.display = v(u), this._syncPhoneOutputs(), this.$dispatch("input", this.fullPhone);
+    onPhoneInput(a) {
+      var c;
+      const n = ((c = this.country) == null ? void 0 : c.digits) ?? 15, d = a.target.value.replace(/\D/g, "").slice(0, n);
+      this.phoneNumber = d, this.display = S(d), this._syncPhoneOutputs(), this.$dispatch("input", this.fullPhone);
     },
     onPhoneFocus() {
       this.focused = !0;
@@ -698,11 +705,11 @@ function I(t = {}) {
      * @private
      */
     _syncPhoneOutputs() {
-      const n = (this.dialCode ?? "").replace(/\s/g, ""), r = this.phoneNumber ?? "";
-      this.fullPhone = r ? `${n}${r}` : n, this.raw = r, this.value = this.fullPhone, this.$dispatch("phone-change", {
+      const a = (this.dialCode ?? "").replace(/\s/g, ""), n = this.phoneNumber ?? "";
+      this.fullPhone = n ? `${a}${n}` : a, this.raw = n, this.value = this.fullPhone, this.$dispatch("phone-change", {
         country: this.countryCode,
         dialCode: this.dialCode,
-        number: r,
+        number: n,
         full: this.fullPhone
       });
     },
@@ -711,26 +718,26 @@ function I(t = {}) {
      * @private
      */
     _positionCountryPanel() {
-      const n = this.$refs.countryTrigger, r = this.$refs.countryPanel;
-      if (!n || !r) return;
-      const u = 4, p = n.getBoundingClientRect(), f = r.offsetHeight || 220, b = Math.max(r.offsetWidth || 220, 220), w = window.innerHeight;
-      let g = p.bottom + u;
-      g + f > w - 8 && (g = p.top - f - u), this.countryPanelStyle = {
+      const a = this.$refs.countryTrigger, n = this.$refs.countryPanel;
+      if (!a || !n) return;
+      const d = 4, c = a.getBoundingClientRect(), f = n.offsetHeight || 220, x = Math.max(n.offsetWidth || 220, 220), $ = window.innerHeight;
+      let g = c.bottom + d;
+      g + f > $ - 8 && (g = c.top - f - d), this.countryPanelStyle = {
         position: "fixed",
         top: `${Math.round(g)}px`,
-        left: `${Math.round(p.left)}px`,
-        width: `${Math.round(b)}px`,
+        left: `${Math.round(c.left)}px`,
+        width: `${Math.round(x)}px`,
         zIndex: 250
       };
     }
-  } : c;
+  } : m;
 }
-const x = 320;
-function A(t) {
+const P = 320;
+function j(t) {
   t.store("toast", {
     items: [],
     _id: 0,
-    transitionMs: x,
+    transitionMs: P,
     /**
      * Ajoute une notification toast.
      *
@@ -742,9 +749,9 @@ function A(t) {
      * @param {{ label: string, fn?: () => void }|null} [opts.action=null]
      * @returns {number} Identifiant du toast
      */
-    add({ type: e = "info", title: s = "", message: i = "", duration: l = 4500, action: a = null }) {
-      const o = ++this._id;
-      return this.items.push({ id: o, type: e, title: s, message: i, action: a, visible: !0 }), l > 0 && setTimeout(() => this.dismiss(o), l), o;
+    add({ type: e = "info", title: i = "", message: s = "", duration: l = 4500, action: o = null }) {
+      const h = ++this._id;
+      return this.items.push({ id: h, type: e, title: i, message: s, action: o, visible: !0 }), l > 0 && setTimeout(() => this.dismiss(h), l), h;
     },
     /**
      * Masque puis retire un toast après la transition de sortie.
@@ -752,62 +759,62 @@ function A(t) {
      * @param {number} id
      */
     dismiss(e) {
-      const s = this.items.find((i) => i.id === e);
-      s && (s.visible = !1, setTimeout(() => {
-        this.items = this.items.filter((i) => i.id !== e);
-      }, x));
+      const i = this.items.find((s) => s.id === e);
+      i && (i.visible = !1, setTimeout(() => {
+        this.items = this.items.filter((s) => s.id !== e);
+      }, P));
     },
     /** Retire tous les toasts avec animation. */
     clear() {
-      this.items.forEach((e) => e.visible = !1), setTimeout(() => this.items = [], x);
+      this.items.forEach((e) => e.visible = !1), setTimeout(() => this.items = [], P);
     },
     /**
      * @param {string} message
      * @param {string} [title='Succès']
      * @param {Object} [opts]
      */
-    success(e, s = "Succès", i = {}) {
-      return this.add({ type: "success", title: s, message: e, ...i });
+    success(e, i = "Succès", s = {}) {
+      return this.add({ type: "success", title: i, message: e, ...s });
     },
     /**
      * @param {string} message
      * @param {string} [title='Erreur']
      * @param {Object} [opts]
      */
-    error(e, s = "Erreur", i = {}) {
-      return this.add({ type: "error", title: s, message: e, ...i });
+    error(e, i = "Erreur", s = {}) {
+      return this.add({ type: "error", title: i, message: e, ...s });
     },
     /**
      * @param {string} message
      * @param {string} [title='Attention']
      * @param {Object} [opts]
      */
-    warning(e, s = "Attention", i = {}) {
-      return this.add({ type: "warning", title: s, message: e, ...i });
+    warning(e, i = "Attention", s = {}) {
+      return this.add({ type: "warning", title: i, message: e, ...s });
     },
     /**
      * @param {string} message
      * @param {string} [title='Info']
      * @param {Object} [opts]
      */
-    info(e, s = "Info", i = {}) {
-      return this.add({ type: "info", title: s, message: e, ...i });
+    info(e, i = "Info", s = {}) {
+      return this.add({ type: "info", title: i, message: e, ...s });
     }
   }), window.$toast = t.store("toast");
 }
-function B(t) {
-  A(t), t.data("apSelect", R), t.data("apDropdown", T), t.data("apInputText", k), t.data("apInputTags", C), t.data("apSwitch", _), t.data("apSlider", N), t.data("apForm", D), t.data("apInputMask", I);
+function U(t) {
+  j(t), t.data("apSelect", k), t.data("apDropdown", C), t.data("apInputText", _), t.data("apInputTags", N), t.data("apSwitch", D), t.data("apSlider", M), t.data("apForm", O), t.data("apInputMask", B);
 }
 export {
-  x as TOAST_TRANSITION_MS,
-  T as apDropdown,
-  D as apForm,
-  I as apInputMask,
-  C as apInputTags,
-  k as apInputText,
-  R as apSelect,
-  N as apSlider,
-  _ as apSwitch,
-  B as default,
-  A as registerToastStore
+  P as TOAST_TRANSITION_MS,
+  C as apDropdown,
+  O as apForm,
+  B as apInputMask,
+  N as apInputTags,
+  _ as apInputText,
+  k as apSelect,
+  M as apSlider,
+  D as apSwitch,
+  U as default,
+  j as registerToastStore
 };

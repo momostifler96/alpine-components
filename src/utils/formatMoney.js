@@ -44,7 +44,7 @@ export function formatMoneyLive(input, locale = 'fr-FR') {
   if (!intPart && !decPart) return '';
 
   const grouped = intPart ? groupThousands(intPart) : '0';
-  if (decPart !== '' || (lastSep >= 0 && cleaned.endsWith(decSep))) {
+  if (decPart !== '' || (lastSep >= 0 && (cleaned.endsWith(',') || cleaned.endsWith('.')))) {
     return `${grouped}${decSep}${decPart}`;
   }
   return grouped;

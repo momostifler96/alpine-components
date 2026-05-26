@@ -3,3 +3,4 @@ node_modules
 .claude
 docs/.vitepress/dist
 docs/.vitepress/cache
+docs-starlight
