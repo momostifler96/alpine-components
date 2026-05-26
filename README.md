@@ -107,10 +107,23 @@ Surchargez les variables sur `:root` après l'import du style :
 npm install @momoledev/alpine-components
 ```
 
-### 2. Enregistrer dans `resources/js/app.js`
+### 2a. Importer le style dans `resources/css/app.css`
+
+```css
+@import '@momoledev/alpine-components/style';
+```
+
+> C'est la méthode recommandée dans Laravel. Vite résout automatiquement le chemin `node_modules`.
+
+**Alternative** — importer directement dans `resources/js/app.js` :
 
 ```js
 import '@momoledev/alpine-components/style'
+```
+
+### 2b. Enregistrer Alpine dans `resources/js/app.js`
+
+```js
 import Alpine from 'alpinejs'
 import AlpineComponents from '@momoledev/alpine-components'
 
