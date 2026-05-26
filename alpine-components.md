@@ -1,12 +1,15 @@
 Génère ou intègre des composants Alpine Components (@momoledev/alpine-components) dans le fichier ou la vue demandée par l'utilisateur.
 
-**Règles :**
-- Utilise toujours les classes `ap-*` du stylesheet officiel
-- Importe le style si ce n'est pas déjà fait : `import '@momoledev/alpine-components/style'`
-- Chaque composant nécessite `x-data="apNom({ ... })"` sur le wrapper racine
-- Toujours ajouter `@click.outside="close()"` sur les composants avec panneau (Select, Dropdown, InputMask country)
-- Toujours ajouter `x-cloak` sur les panneaux pour éviter le flash
-- Les composants émettent `input` et `change` — compatibles `wire:model.live`
+**OBLIGATOIRE — sans exception :**
+1. **Toujours générer avec les classes `ap-*`** — ne jamais produire un composant sans ses classes CSS. Le snippet "minimal sans style" n'existe pas ici.
+2. **Toujours vérifier l'import du style** — si le fichier cible ne contient pas encore `@momoledev/alpine-components/style`, ajouter en tête :
+   - JS/TS : `import '@momoledev/alpine-components/style'`
+   - CSS Laravel : `@import '@momoledev/alpine-components/style';` dans `resources/css/app.css`
+3. **Toujours ajouter `@click.outside="close()"` sur Select, Dropdown, InputMask country**
+4. **Toujours ajouter `x-cloak` sur les panneaux** (Select panel, Dropdown panel, InputMask country panel)
+5. **Ne jamais inventer de classes** — utiliser uniquement les classes listées dans ce fichier
+
+**Rappel :** les composants émettent `input` et `change` → compatibles `wire:model.live`.
 
 Référence complète des snippets ci-dessous. Copie le bloc correspondant, adapte les props, et intègre-le.
 
