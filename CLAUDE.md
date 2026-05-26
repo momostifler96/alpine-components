@@ -3,6 +3,9 @@
 Règles pour tout agent ou modèle qui travaille sur ce dépôt.
 Lire ce fichier en entier avant toute modification.
 
+> **Snippets copy-paste** → [`alpine-components.md`](./alpine-components.md)
+> **Skill invocable** → `/alpine-components` (snippets HTML + classes `ap-*` pour tous les composants)
+
 ---
 
 ## Vue d'ensemble
@@ -127,6 +130,7 @@ Exception tolérée : `apDropdown.panelClass` (classes de positionnement nécess
 3. Ajouter une entrée dans `src/data/catalog.js` :
    ```js
    {
+   
      id: 'nom-composant',       // ancre HTML
      slug: 'apNomComposant',    // nom Alpine.data
      title: 'Nom Composant',
