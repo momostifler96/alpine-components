@@ -6,14 +6,23 @@
  *   disabled    boolean  (défaut false)
  *   width       'auto' | 'trigger'  (défaut auto)
  *   fixed       boolean  (défaut true — position fixed pour éviter le clipping overflow)
+ *   prefix      { type: 'image'|'icon'|'text'|'badge'|'dot', ...props }
+ *   suffix      { type: 'image'|'icon'|'text'|'badge'|'dot', ...props }
+ *               image : { type:'image', src, alt? }
+ *               icon  : { type:'icon', svg }
+ *               text  : { type:'text', content }
+ *               badge : { type:'badge', content, color? }
+ *               dot   : { type:'dot', color? }
  *
  * Marqueurs HTML recommandés :
  *   data-dropdown-trigger sur le bouton déclencheur
  *   data-dropdown-panel sur le panneau (x-ref="panel" équivalent)
  *
  * @example
- * <div x-data="apDropdown()" @click.outside="close()">
- *   <button data-dropdown-trigger @click="toggle()">...</button>
+ * <div x-data="apDropdown({ prefix: { type:'image', src:'/logo.png' } })" @click.outside="close()">
+ *   <button data-dropdown-trigger @click="toggle()">
+ *     <span x-html="renderItem(prefix)"></span> Mon menu
+ *   </button>
  *   <div data-dropdown-panel x-show="open" :style="panelStyle" :class="panelClass">...</div>
  * </div>
  */
@@ -26,6 +35,8 @@ export default function apDropdown(config = {}) {
     widthMode: config.width ?? 'auto',
     resolvedPlacement: 'bottom-start',
     panelStyle: {},
+    prefix: config.prefix ?? null,
+    suffix: config.suffix ?? null,
 
     init() {
       this.$watch('open', isOpen => {
@@ -149,6 +160,52 @@ export default function apDropdown(config = {}) {
       window.removeEventListener('scroll', this._onReposition, true);
       window.removeEventListener('resize', this._onReposition);
       this._onReposition = null;
+    },
+
+    renderItem(item, size = 'sm') {
+      if (!item) return '';
+      const dim = { xs: 14, sm: 16, md: 20 }[size] ?? 16;
+
+      switch (item.type) {
+        case 'image':
+          return `<img src="${item.src}" alt="${item.alt ?? ''}" width="${dim}" height="${dim}" class="rounded object-cover shrink-0 inline-block" style="min-width:${dim}px;height:${dim}px">`;
+
+        case 'icon':
+          return `<span class="inline-flex items-center justify-center shrink-0" style="width:${dim}px;height:${dim}px">${item.svg}</span>`;
+
+        case 'text':
+          return `<span class="text-sm text-gray-500 shrink-0 leading-none">${item.content}</span>`;
+
+        case 'badge': {
+          const palette = {
+            green:  'bg-green-100 text-green-700',
+            blue:   'bg-blue-100 text-blue-700',
+            red:    'bg-red-100 text-red-700',
+            yellow: 'bg-yellow-100 text-yellow-700',
+            purple: 'bg-purple-100 text-purple-700',
+            indigo: 'bg-indigo-100 text-indigo-700',
+            gray:   'bg-gray-100 text-gray-600',
+          };
+          const cls = palette[item.color ?? 'gray'] ?? palette.gray;
+          return `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium shrink-0 ${cls}">${item.content}</span>`;
+        }
+
+        case 'dot': {
+          const colors = {
+            green:  'bg-green-400',
+            red:    'bg-red-400',
+            yellow: 'bg-yellow-400',
+            blue:   'bg-blue-400',
+            purple: 'bg-purple-400',
+            gray:   'bg-gray-400',
+          };
+          const cls = colors[item.color ?? 'gray'] ?? colors.gray;
+          return `<span class="inline-block rounded-full shrink-0 ${cls}" style="width:8px;height:8px;margin-top:3px"></span>`;
+        }
+
+        default:
+          return '';
+      }
     },
   };
 }

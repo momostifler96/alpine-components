@@ -4,6 +4,11 @@
  * Config options:
  *   options[]       { value, label, prefix?, suffix?, disabled? }
  *   prefix/suffix   { type: 'image'|'icon'|'text'|'badge'|'dot', ...props }
+ *                   image : { type:'image', src, alt? }
+ *                   icon  : { type:'icon', svg }
+ *                   text  : { type:'text', content }
+ *                   badge : { type:'badge', content, color? }
+ *                   dot   : { type:'dot', color? }
  *   multiple        boolean  (default false)
  *   value           initial value (scalar or array when multiple)
  *   placeholder     string
@@ -32,6 +37,8 @@ export default function apSelect(config = {}) {
     disabled:     config.disabled     ?? false,
     clearable:    config.clearable    ?? true,
     maxSelected:  config.maxSelected  ?? null,
+    prefix:       config.prefix       ?? null,
+    suffix:       config.suffix       ?? null,
 
     init() {
       this.$watch('value', val => {

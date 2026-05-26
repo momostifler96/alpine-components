@@ -1,34 +1,36 @@
-function k(t = {}) {
+function T(e = {}) {
   return {
     open: !1,
     search: "",
     focused: !1,
-    value: t.value !== void 0 ? t.value : t.multiple ? [] : null,
-    options: t.options ?? [],
-    multiple: t.multiple ?? !1,
-    placeholder: t.placeholder ?? "Sélectionner...",
-    searchable: t.searchable ?? !1,
-    disabled: t.disabled ?? !1,
-    clearable: t.clearable ?? !0,
-    maxSelected: t.maxSelected ?? null,
+    value: e.value !== void 0 ? e.value : e.multiple ? [] : null,
+    options: e.options ?? [],
+    multiple: e.multiple ?? !1,
+    placeholder: e.placeholder ?? "Sélectionner...",
+    searchable: e.searchable ?? !1,
+    disabled: e.disabled ?? !1,
+    clearable: e.clearable ?? !0,
+    maxSelected: e.maxSelected ?? null,
+    prefix: e.prefix ?? null,
+    suffix: e.suffix ?? null,
     init() {
-      this.$watch("value", (e) => {
-        this.$dispatch("input", e), this.$dispatch("change", e);
+      this.$watch("value", (t) => {
+        this.$dispatch("input", t), this.$dispatch("change", t);
       });
     },
     // ── Computed ──────────────────────────────────────────────────────────────
     get filteredOptions() {
       if (!this.search.trim()) return this.options;
-      const e = this.search.toLowerCase();
+      const t = this.search.toLowerCase();
       return this.options.filter(
-        (i) => String(i.label ?? i.value).toLowerCase().includes(e)
+        (i) => String(i.label ?? i.value).toLowerCase().includes(t)
       );
     },
     get selectedOption() {
-      return this.multiple ? null : this.options.find((e) => e.value === this.value) ?? null;
+      return this.multiple ? null : this.options.find((t) => t.value === this.value) ?? null;
     },
     get selectedOptions() {
-      return this.multiple ? (this.value ?? []).map((e) => this.options.find((i) => i.value === e)).filter(Boolean) : [];
+      return this.multiple ? (this.value ?? []).map((t) => this.options.find((i) => i.value === t)).filter(Boolean) : [];
     },
     get hasValue() {
       return this.multiple ? (this.value ?? []).length > 0 : this.value !== null && this.value !== void 0 && this.value !== "";
@@ -37,45 +39,45 @@ function k(t = {}) {
       return !this.multiple || this.maxSelected === null ? !0 : (this.value ?? []).length < this.maxSelected;
     },
     // ── Actions ───────────────────────────────────────────────────────────────
-    select(e) {
-      if (!e.disabled)
+    select(t) {
+      if (!t.disabled)
         if (this.multiple) {
           const i = this.value ?? [];
-          this.value = i.includes(e.value) ? i.filter((s) => s !== e.value) : this.canAddMore ? [...i, e.value] : i;
+          this.value = i.includes(t.value) ? i.filter((s) => s !== t.value) : this.canAddMore ? [...i, t.value] : i;
         } else
-          this.value = e.value, this.open = !1, this.search = "";
+          this.value = t.value, this.open = !1, this.search = "";
     },
-    removeTag(e, i) {
-      i == null || i.stopPropagation(), this.value = (this.value ?? []).filter((s) => s !== e);
+    removeTag(t, i) {
+      i == null || i.stopPropagation(), this.value = (this.value ?? []).filter((s) => s !== t);
     },
-    clear(e) {
-      e == null || e.stopPropagation(), this.value = this.multiple ? [] : null;
+    clear(t) {
+      t == null || t.stopPropagation(), this.value = this.multiple ? [] : null;
     },
-    isSelected(e) {
-      return this.multiple ? (this.value ?? []).includes(e) : this.value === e;
+    isSelected(t) {
+      return this.multiple ? (this.value ?? []).includes(t) : this.value === t;
     },
     toggleOpen() {
       this.disabled || (this.open = !this.open, this.open && this.searchable && this.$nextTick(() => {
-        var e;
-        return (e = this.$refs.searchInput) == null ? void 0 : e.focus();
+        var t;
+        return (t = this.$refs.searchInput) == null ? void 0 : t.focus();
       }));
     },
     close() {
       this.open = !1, this.search = "";
     },
     // ── Prefix/Suffix renderer ────────────────────────────────────────────────
-    renderItem(e, i = "sm") {
-      if (!e) return "";
+    renderItem(t, i = "sm") {
+      if (!t) return "";
       const s = { xs: 14, sm: 16, md: 20 }[i] ?? 16;
-      switch (e.type) {
+      switch (t.type) {
         case "image":
-          return `<img src="${e.src}" alt="${e.alt ?? ""}" width="${s}" height="${s}" class="rounded object-cover shrink-0 inline-block" style="min-width:${s}px;height:${s}px">`;
+          return `<img src="${t.src}" alt="${t.alt ?? ""}" width="${s}" height="${s}" class="rounded object-cover shrink-0 inline-block" style="min-width:${s}px;height:${s}px">`;
         case "icon":
-          return `<span class="inline-flex items-center justify-center shrink-0" style="width:${s}px;height:${s}px">${e.svg}</span>`;
+          return `<span class="inline-flex items-center justify-center shrink-0" style="width:${s}px;height:${s}px">${t.svg}</span>`;
         case "text":
-          return `<span class="text-sm text-gray-500 shrink-0 leading-none">${e.content}</span>`;
+          return `<span class="text-sm text-gray-500 shrink-0 leading-none">${t.content}</span>`;
         case "badge": {
-          const l = {
+          const a = {
             green: "bg-green-100 text-green-700",
             blue: "bg-blue-100 text-blue-700",
             red: "bg-red-100 text-red-700",
@@ -84,10 +86,10 @@ function k(t = {}) {
             indigo: "bg-indigo-100 text-indigo-700",
             gray: "bg-gray-100 text-gray-600"
           };
-          return `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium shrink-0 ${l[e.color ?? "gray"] ?? l.gray}">${e.content}</span>`;
+          return `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium shrink-0 ${a[t.color ?? "gray"] ?? a.gray}">${t.content}</span>`;
         }
         case "dot": {
-          const l = {
+          const a = {
             green: "bg-green-400",
             red: "bg-red-400",
             yellow: "bg-yellow-400",
@@ -95,7 +97,7 @@ function k(t = {}) {
             purple: "bg-purple-400",
             gray: "bg-gray-400"
           };
-          return `<span class="inline-block rounded-full shrink-0 ${l[e.color ?? "gray"] ?? l.gray}" style="width:8px;height:8px;margin-top:3px"></span>`;
+          return `<span class="inline-block rounded-full shrink-0 ${a[t.color ?? "gray"] ?? a.gray}" style="width:8px;height:8px;margin-top:3px"></span>`;
         }
         default:
           return "";
@@ -103,18 +105,20 @@ function k(t = {}) {
     }
   };
 }
-function C(t = {}) {
+function C(e = {}) {
   return {
     open: !1,
-    disabled: t.disabled ?? !1,
-    placement: t.placement ?? "bottom-start",
-    useFixed: t.fixed ?? !0,
-    widthMode: t.width ?? "auto",
+    disabled: e.disabled ?? !1,
+    placement: e.placement ?? "bottom-start",
+    useFixed: e.fixed ?? !0,
+    widthMode: e.width ?? "auto",
     resolvedPlacement: "bottom-start",
     panelStyle: {},
+    prefix: e.prefix ?? null,
+    suffix: e.suffix ?? null,
     init() {
-      this.$watch("open", (e) => {
-        e ? this.$nextTick(() => {
+      this.$watch("open", (t) => {
+        t ? this.$nextTick(() => {
           this.updatePosition(), this._bindReposition();
         }) : this._unbindReposition();
       });
@@ -137,13 +141,13 @@ function C(t = {}) {
      * @returns {string}
      */
     get positionClass() {
-      const e = {
+      const t = {
         "bottom-start": "top-full left-0 mt-1",
         "bottom-end": "top-full right-0 mt-1",
         "top-start": "bottom-full left-0 mb-1",
         "top-end": "bottom-full right-0 mb-1"
       };
-      return e[this.resolvedPlacement] ?? e["bottom-start"];
+      return t[this.resolvedPlacement] ?? t["bottom-start"];
     },
     /**
      * Classes du panneau (fixed ou absolute selon la config).
@@ -151,25 +155,25 @@ function C(t = {}) {
      * @returns {string}
      */
     get panelClass() {
-      const e = "z-[200] bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden";
-      return this.useFixed ? `fixed ${e}` : `absolute ${this.positionClass} ${e}`;
+      const t = "z-[200] bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden";
+      return this.useFixed ? `fixed ${t}` : `absolute ${this.positionClass} ${t}`;
     },
     /**
      * Recalcule la position du panneau pour qu'il reste visible dans le viewport.
      */
     updatePosition() {
-      const e = this.$refs.trigger ?? this.$el.querySelector("[data-dropdown-trigger]"), i = this.$refs.panel ?? this.$el.querySelector("[data-dropdown-panel]");
-      if (!e || !i) return;
-      const s = 6, l = e.getBoundingClientRect(), o = i.offsetWidth || i.scrollWidth || 192, h = i.offsetHeight || i.scrollHeight || 120, p = window.innerWidth, r = window.innerHeight, u = 8;
+      const t = this.$refs.trigger ?? this.$el.querySelector("[data-dropdown-trigger]"), i = this.$refs.panel ?? this.$el.querySelector("[data-dropdown-panel]");
+      if (!t || !i) return;
+      const s = 6, a = t.getBoundingClientRect(), o = i.offsetWidth || i.scrollWidth || 192, u = i.offsetHeight || i.scrollHeight || 120, p = window.innerWidth, n = window.innerHeight, h = 8;
       let m = this.placement.startsWith("top") ? "top" : "bottom", y = this.placement.endsWith("end") ? "end" : "start";
-      m === "bottom" && l.bottom + h + s > r - u && (m = "top"), m === "top" && l.top - h - s < u && (m = "bottom"), y === "start" && l.left + o > p - u && (y = "end"), y === "end" && l.right - o < u && (y = "start"), this.resolvedPlacement = `${m}-${y}`;
+      m === "bottom" && a.bottom + u + s > n - h && (m = "top"), m === "top" && a.top - u - s < h && (m = "bottom"), y === "start" && a.left + o > p - h && (y = "end"), y === "end" && a.right - o < h && (y = "start"), this.resolvedPlacement = `${m}-${y}`;
       let w, b;
-      m === "bottom" ? w = l.bottom + s : w = l.top - h - s, y === "start" ? b = l.left : b = l.right - o, b = Math.max(u, Math.min(b, p - o - u)), w = Math.max(u, Math.min(w, r - h - u));
-      const a = {
+      m === "bottom" ? w = a.bottom + s : w = a.top - u - s, y === "start" ? b = a.left : b = a.right - o, b = Math.max(h, Math.min(b, p - o - h)), w = Math.max(h, Math.min(w, n - u - h));
+      const r = {
         top: `${Math.round(w)}px`,
         left: `${Math.round(b)}px`
       };
-      this.widthMode === "trigger" && (a.width = `${Math.round(l.width)}px`), this.panelStyle = a;
+      this.widthMode === "trigger" && (r.width = `${Math.round(a.width)}px`), this.panelStyle = r;
     },
     /** @private */
     _bindReposition() {
@@ -178,24 +182,61 @@ function C(t = {}) {
     /** @private */
     _unbindReposition() {
       this._onReposition && (window.removeEventListener("scroll", this._onReposition, !0), window.removeEventListener("resize", this._onReposition), this._onReposition = null);
+    },
+    renderItem(t, i = "sm") {
+      if (!t) return "";
+      const s = { xs: 14, sm: 16, md: 20 }[i] ?? 16;
+      switch (t.type) {
+        case "image":
+          return `<img src="${t.src}" alt="${t.alt ?? ""}" width="${s}" height="${s}" class="rounded object-cover shrink-0 inline-block" style="min-width:${s}px;height:${s}px">`;
+        case "icon":
+          return `<span class="inline-flex items-center justify-center shrink-0" style="width:${s}px;height:${s}px">${t.svg}</span>`;
+        case "text":
+          return `<span class="text-sm text-gray-500 shrink-0 leading-none">${t.content}</span>`;
+        case "badge": {
+          const a = {
+            green: "bg-green-100 text-green-700",
+            blue: "bg-blue-100 text-blue-700",
+            red: "bg-red-100 text-red-700",
+            yellow: "bg-yellow-100 text-yellow-700",
+            purple: "bg-purple-100 text-purple-700",
+            indigo: "bg-indigo-100 text-indigo-700",
+            gray: "bg-gray-100 text-gray-600"
+          };
+          return `<span class="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium shrink-0 ${a[t.color ?? "gray"] ?? a.gray}">${t.content}</span>`;
+        }
+        case "dot": {
+          const a = {
+            green: "bg-green-400",
+            red: "bg-red-400",
+            yellow: "bg-yellow-400",
+            blue: "bg-blue-400",
+            purple: "bg-purple-400",
+            gray: "bg-gray-400"
+          };
+          return `<span class="inline-block rounded-full shrink-0 ${a[t.color ?? "gray"] ?? a.gray}" style="width:8px;height:8px;margin-top:3px"></span>`;
+        }
+        default:
+          return "";
+      }
     }
   };
 }
-function _(t = {}) {
+function _(e = {}) {
   return {
-    value: t.value ?? "",
-    type: t.type ?? "text",
-    placeholder: t.placeholder ?? "",
-    prefix: t.prefix ?? null,
-    suffix: t.suffix ?? null,
-    disabled: t.disabled ?? !1,
-    readonly: t.readonly ?? !1,
-    clearable: t.clearable ?? !1,
+    value: e.value ?? "",
+    type: e.type ?? "text",
+    placeholder: e.placeholder ?? "",
+    prefix: e.prefix ?? null,
+    suffix: e.suffix ?? null,
+    disabled: e.disabled ?? !1,
+    readonly: e.readonly ?? !1,
+    clearable: e.clearable ?? !1,
     focused: !1,
     showPassword: !1,
     init() {
-      this.$watch("value", (e) => {
-        this.$dispatch("input", e), this.$dispatch("change", e);
+      this.$watch("value", (t) => {
+        this.$dispatch("input", t), this.$dispatch("change", t);
       });
     },
     get inputType() {
@@ -209,39 +250,39 @@ function _(t = {}) {
     },
     clear() {
       this.value = "", this.$nextTick(() => {
-        var e;
-        return (e = this.$refs.input) == null ? void 0 : e.focus();
+        var t;
+        return (t = this.$refs.input) == null ? void 0 : t.focus();
       });
     },
     togglePassword() {
       this.showPassword = !this.showPassword;
     },
-    renderAddon(e, i = "prefix") {
-      if (!e) return "";
-      switch (e.type) {
+    renderAddon(t, i = "prefix") {
+      if (!t) return "";
+      switch (t.type) {
         case "icon":
-          return `<span class="inline-flex items-center justify-center w-5 h-5 text-gray-400">${e.svg}</span>`;
+          return `<span class="inline-flex items-center justify-center w-5 h-5 text-gray-400">${t.svg}</span>`;
         case "text":
-          return `<span class="text-sm text-gray-500 font-medium select-none whitespace-nowrap">${e.content}</span>`;
+          return `<span class="text-sm text-gray-500 font-medium select-none whitespace-nowrap">${t.content}</span>`;
         default:
           return "";
       }
     }
   };
 }
-function N(t = {}) {
+function N(e = {}) {
   return {
-    tags: t.tags ? [...t.tags] : [],
+    tags: e.tags ? [...e.tags] : [],
     input: "",
     focused: !1,
-    disabled: t.disabled ?? !1,
-    placeholder: t.placeholder ?? "Ajouter un tag...",
-    maxTags: t.maxTags ?? null,
-    allowDuplicates: t.allowDuplicates ?? !1,
-    separators: t.separators ?? ["Enter", ","],
+    disabled: e.disabled ?? !1,
+    placeholder: e.placeholder ?? "Ajouter un tag...",
+    maxTags: e.maxTags ?? null,
+    allowDuplicates: e.allowDuplicates ?? !1,
+    separators: e.separators ?? ["Enter", ","],
     init() {
-      this.$watch("tags", (e) => {
-        this.$dispatch("input", [...e]), this.$dispatch("change", [...e]);
+      this.$watch("tags", (t) => {
+        this.$dispatch("input", [...t]), this.$dispatch("change", [...t]);
       });
     },
     get value() {
@@ -250,8 +291,8 @@ function N(t = {}) {
     get canAdd() {
       return this.maxTags === null || this.tags.length < this.maxTags;
     },
-    addTag(e) {
-      const i = String(e ?? "").trim();
+    addTag(t) {
+      const i = String(t ?? "").trim();
       if (!(!i || !this.canAdd)) {
         if (!this.allowDuplicates && this.tags.includes(i)) {
           this.input = "";
@@ -260,30 +301,30 @@ function N(t = {}) {
         this.tags = [...this.tags, i], this.input = "";
       }
     },
-    removeTag(e) {
-      this.tags = this.tags.filter((i, s) => s !== e);
+    removeTag(t) {
+      this.tags = this.tags.filter((i, s) => s !== t);
     },
-    onKeydown(e) {
-      if (this.separators.includes(e.key)) {
-        e.preventDefault(), this.addTag(this.input.replace(/,$/, ""));
+    onKeydown(t) {
+      if (this.separators.includes(t.key)) {
+        t.preventDefault(), this.addTag(this.input.replace(/,$/, ""));
         return;
       }
-      e.key === "Backspace" && this.input === "" && this.tags.length && (this.tags = this.tags.slice(0, -1));
+      t.key === "Backspace" && this.input === "" && this.tags.length && (this.tags = this.tags.slice(0, -1));
     },
-    onPaste(e) {
-      var l;
-      const s = (((l = e.clipboardData) == null ? void 0 : l.getData("text")) ?? "").split(/[,\n\t]+/).map((o) => o.trim()).filter(Boolean);
-      s.length > 1 && (e.preventDefault(), s.forEach((o) => this.addTag(o)));
+    onPaste(t) {
+      var a;
+      const s = (((a = t.clipboardData) == null ? void 0 : a.getData("text")) ?? "").split(/[,\n\t]+/).map((o) => o.trim()).filter(Boolean);
+      s.length > 1 && (t.preventDefault(), s.forEach((o) => this.addTag(o)));
     }
   };
 }
-function D(t = {}) {
+function D(e = {}) {
   return {
-    value: t.value ?? !1,
-    disabled: t.disabled ?? !1,
+    value: e.value ?? !1,
+    disabled: e.disabled ?? !1,
     init() {
-      this.$watch("value", (e) => {
-        this.$dispatch("input", e), this.$dispatch("change", e);
+      this.$watch("value", (t) => {
+        this.$dispatch("input", t), this.$dispatch("change", t);
       });
     },
     toggle() {
@@ -291,45 +332,45 @@ function D(t = {}) {
     }
   };
 }
-function M(t = {}) {
+function M(e = {}) {
   return {
-    min: t.min ?? 0,
-    max: t.max ?? 100,
-    step: t.step ?? 1,
-    disabled: t.disabled ?? !1,
-    showTooltip: t.showTooltip ?? !0,
-    format: t.format ?? ((e) => String(e)),
+    min: e.min ?? 0,
+    max: e.max ?? 100,
+    step: e.step ?? 1,
+    disabled: e.disabled ?? !1,
+    showTooltip: e.showTooltip ?? !0,
+    format: e.format ?? ((t) => String(t)),
     dragging: !1,
-    value: t.value !== void 0 ? t.value : t.min ?? 0,
+    value: e.value !== void 0 ? e.value : e.min ?? 0,
     init() {
-      this.$watch("value", (e) => {
-        this.$dispatch("input", e), this.$dispatch("change", e);
+      this.$watch("value", (t) => {
+        this.$dispatch("input", t), this.$dispatch("change", t);
       });
     },
     get percentage() {
-      const e = this.max - this.min;
-      return e === 0 ? 0 : (this.value - this.min) / e * 100;
+      const t = this.max - this.min;
+      return t === 0 ? 0 : (this.value - this.min) / t * 100;
     },
     get displayValue() {
       return this.format(this.value);
     },
-    onInput(e) {
-      this.value = Number(e.target.value);
+    onInput(t) {
+      this.value = Number(t.target.value);
     }
   };
 }
-function O(t = {}) {
-  const e = JSON.parse(JSON.stringify(t.data ?? {}));
+function O(e = {}) {
+  const t = JSON.parse(JSON.stringify(e.data ?? {}));
   return {
-    data: t.data ? { ...t.data } : {},
-    errors: t.errors ? { ...t.errors } : {},
+    data: e.data ? { ...e.data } : {},
+    errors: e.errors ? { ...e.errors } : {},
     loading: !1,
     success: !1,
     // ── Error helpers ─────────────────────────────────────────────────────────
     setErrors(i) {
       const s = {};
-      for (const [l, o] of Object.entries(i ?? {}))
-        s[l] = Array.isArray(o) ? o : [o];
+      for (const [a, o] of Object.entries(i ?? {}))
+        s[a] = Array.isArray(o) ? o : [o];
       this.errors = s;
     },
     hasError(i) {
@@ -354,38 +395,38 @@ function O(t = {}) {
       if (this.loading) return { ok: !1 };
       this.loading = !0, this.success = !1;
       try {
-        const l = (s.method ?? "POST").toUpperCase(), o = s.transform ? s.transform(this.data) : this.data, h = {
+        const a = (s.method ?? "POST").toUpperCase(), o = s.transform ? s.transform(this.data) : this.data, u = {
           "Content-Type": "application/json",
           Accept: "application/json",
           ...s.headers
         }, p = document.querySelector('meta[name="csrf-token"]');
-        p && (h["X-CSRF-TOKEN"] = p.content);
-        const r = await fetch(i, {
-          method: l,
-          headers: h,
-          body: l !== "GET" ? JSON.stringify(o) : void 0,
+        p && (u["X-CSRF-TOKEN"] = p.content);
+        const n = await fetch(i, {
+          method: a,
+          headers: u,
+          body: a !== "GET" ? JSON.stringify(o) : void 0,
           signal: s.signal
         });
-        let u;
+        let h;
         try {
-          u = await r.json();
+          h = await n.json();
         } catch {
-          u = null;
+          h = null;
         }
-        return r.ok ? (this.errors = {}, this.success = !0, this.$dispatch("form:success", { status: r.status, data: u }), { ok: !0, status: r.status, data: u }) : (r.status === 422 && (u != null && u.errors) && this.setErrors(u.errors), this.$dispatch("form:error", { status: r.status, data: u }), { ok: !1, status: r.status, data: u });
-      } catch (l) {
-        return l.name !== "AbortError" && this.$dispatch("form:error", { status: 0, error: l.message }), { ok: !1, error: l.message };
+        return n.ok ? (this.errors = {}, this.success = !0, this.$dispatch("form:success", { status: n.status, data: h }), { ok: !0, status: n.status, data: h }) : (n.status === 422 && (h != null && h.errors) && this.setErrors(h.errors), this.$dispatch("form:error", { status: n.status, data: h }), { ok: !1, status: n.status, data: h });
+      } catch (a) {
+        return a.name !== "AbortError" && this.$dispatch("form:error", { status: 0, error: a.message }), { ok: !1, error: a.message };
       } finally {
         this.loading = !1;
       }
     },
     // ── Reset ─────────────────────────────────────────────────────────────────
     reset() {
-      this.errors = {}, this.success = !1, this.data = JSON.parse(JSON.stringify(e));
+      this.errors = {}, this.success = !1, this.data = JSON.parse(JSON.stringify(t));
     }
   };
 }
-const R = [
+const k = [
   { code: "FR", name: "France", dial: "+33", flag: "🇫🇷", digits: 9 },
   { code: "BE", name: "Belgique", dial: "+32", flag: "🇧🇪", digits: 9 },
   { code: "CH", name: "Suisse", dial: "+41", flag: "🇨🇭", digits: 9 },
@@ -402,27 +443,27 @@ const R = [
   { code: "TN", name: "Tunisie", dial: "+216", flag: "🇹🇳", digits: 8 },
   { code: "SN", name: "Sénégal", dial: "+221", flag: "🇸🇳", digits: 9 }
 ];
-function E(t, e = R) {
-  return e.find((i) => i.code === t);
+function E(e, t = k) {
+  return t.find((i) => i.code === e);
 }
-function F(t) {
-  return String(t).replace(/[\u00a0\u202f]/g, " ");
+function F(e) {
+  return String(e).replace(/[\u00a0\u202f]/g, " ");
 }
-function I(t) {
-  return t.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+function I(e) {
+  return e.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
-function v(t, e = "fr-FR") {
-  if (t == null || t === "") return "";
-  const i = e === "fr-FR" ? "," : ".", s = String(t).replace(/\s/g, ""), l = Math.max(s.lastIndexOf(","), s.lastIndexOf("."));
-  let o = "", h = "";
-  if (l >= 0 ? (o = s.slice(0, l).replace(/[^\d]/g, ""), h = s.slice(l + 1).replace(/[^\d]/g, "").slice(0, 2)) : o = s.replace(/[^\d]/g, ""), !o && !h) return "";
+function v(e, t = "fr-FR") {
+  if (e == null || e === "") return "";
+  const i = t === "fr-FR" ? "," : ".", s = String(e).replace(/\s/g, ""), a = Math.max(s.lastIndexOf(","), s.lastIndexOf("."));
+  let o = "", u = "";
+  if (a >= 0 ? (o = s.slice(0, a).replace(/[^\d]/g, ""), u = s.slice(a + 1).replace(/[^\d]/g, "").slice(0, 2)) : o = s.replace(/[^\d]/g, ""), !o && !u) return "";
   const p = o ? I(o) : "0";
-  return h !== "" || l >= 0 && (s.endsWith(",") || s.endsWith(".")) ? `${p}${i}${h}` : p;
+  return u !== "" || a >= 0 && (s.endsWith(",") || s.endsWith(".")) ? `${p}${i}${u}` : p;
 }
-function T(t, e = "fr-FR") {
-  const i = parseFloat(String(t).replace(/\s/g, "").replace(",", "."));
+function R(e, t = "fr-FR") {
+  const i = parseFloat(String(e).replace(/\s/g, "").replace(",", "."));
   if (isNaN(i)) return "";
-  const s = new Intl.NumberFormat(e, {
+  const s = new Intl.NumberFormat(t, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   }).format(i);
@@ -433,206 +474,206 @@ const A = {
     inputmode: "tel",
     placeholder: "06 12 34 56 78",
     live: !0,
-    format(t) {
-      const e = t.replace(/\D/g, "").slice(0, 10);
-      return e ? e.replace(
+    format(e) {
+      const t = e.replace(/\D/g, "").slice(0, 10);
+      return t ? t.replace(
         /^(\d{1,2})(\d{0,2})(\d{0,2})(\d{0,2})(\d{0,2})$/,
-        (i, s, l, o, h, p) => [s, l, o, h, p].filter(Boolean).join(" ")
+        (i, s, a, o, u, p) => [s, a, o, u, p].filter(Boolean).join(" ")
       ) : "";
     },
-    toRaw: (t) => t.replace(/\D/g, ""),
-    validate: (t) => /^(0[67]|0[1-9])\d{8}$/.test(t) || /^\+33[1-9]\d{8}$/.test(t)
+    toRaw: (e) => e.replace(/\D/g, ""),
+    validate: (e) => /^(0[67]|0[1-9])\d{8}$/.test(e) || /^\+33[1-9]\d{8}$/.test(e)
   },
   "phone-intl": {
     inputmode: "tel",
     placeholder: "+33 6 12 34 56 78",
     live: !0,
-    format(t) {
-      const e = t.trimStart().startsWith("+"), i = t.replace(/\D/g, "").slice(0, 15);
-      if (!i) return e ? "+" : "";
+    format(e) {
+      const t = e.trimStart().startsWith("+"), i = e.replace(/\D/g, "").slice(0, 15);
+      if (!i) return t ? "+" : "";
       const s = i.replace(
         /^(\d{1,3})(\d{0,3})(\d{0,3})(\d{0,4})$/,
-        (l, o, h, p, r) => [o, h, p, r].filter(Boolean).join(" ")
+        (a, o, u, p, n) => [o, u, p, n].filter(Boolean).join(" ")
       );
-      return (e ? "+" : "") + s;
+      return (t ? "+" : "") + s;
     },
-    toRaw: (t) => t.replace(/[\s]/g, ""),
-    validate: (t) => /^\+?[1-9]\d{6,14}$/.test(t.replace(/[\s\-().]/g, ""))
+    toRaw: (e) => e.replace(/[\s]/g, ""),
+    validate: (e) => /^\+?[1-9]\d{6,14}$/.test(e.replace(/[\s\-().]/g, ""))
   },
   "money-eur": {
     inputmode: "decimal",
     placeholder: "0,00",
     locale: "fr-FR",
     live: !0,
-    format(t, e) {
-      return t === "" || t == null ? "" : e ? v(t, "fr-FR") : T(t, "fr-FR");
+    format(e, t) {
+      return e === "" || e == null ? "" : t ? v(e, "fr-FR") : R(e, "fr-FR");
     },
-    focusDisplay(t) {
-      return t ? v(String(t).replace(".", ","), "fr-FR") : "";
+    focusDisplay(e) {
+      return e ? v(String(e).replace(".", ","), "fr-FR") : "";
     },
-    toRaw: (t) => String(t).replace(/\s/g, "").replace(",", "."),
-    validate: (t) => t === "" || !isNaN(parseFloat(t))
+    toRaw: (e) => String(e).replace(/\s/g, "").replace(",", "."),
+    validate: (e) => e === "" || !isNaN(parseFloat(e))
   },
   "money-usd": {
     inputmode: "decimal",
     placeholder: "0.00",
     locale: "en-US",
     live: !0,
-    format(t, e) {
-      return t === "" || t == null ? "" : e ? v(t, "en-US") : T(t, "en-US");
+    format(e, t) {
+      return e === "" || e == null ? "" : t ? v(e, "en-US") : R(e, "en-US");
     },
-    focusDisplay(t) {
-      return t ? v(String(t ?? ""), "en-US") : "";
+    focusDisplay(e) {
+      return e ? v(String(e ?? ""), "en-US") : "";
     },
-    toRaw: (t) => String(t).replace(/\s/g, "").replace(/,/g, ""),
-    validate: (t) => t === "" || !isNaN(parseFloat(t))
+    toRaw: (e) => String(e).replace(/\s/g, "").replace(/,/g, ""),
+    validate: (e) => e === "" || !isNaN(parseFloat(e))
   },
   card: {
     inputmode: "numeric",
     placeholder: "0000 0000 0000 0000",
     live: !0,
-    format: (t) => t.replace(/\D/g, "").slice(0, 16).replace(/(\d{4})(?=\d)/g, "$1 "),
-    toRaw: (t) => t.replace(/\D/g, ""),
-    validate: (t) => t.replace(/\D/g, "").length === 16
+    format: (e) => e.replace(/\D/g, "").slice(0, 16).replace(/(\d{4})(?=\d)/g, "$1 "),
+    toRaw: (e) => e.replace(/\D/g, ""),
+    validate: (e) => e.replace(/\D/g, "").length === 16
   },
   "date-fr": {
     inputmode: "numeric",
     placeholder: "JJ/MM/AAAA",
     live: !0,
-    format(t) {
-      const e = t.replace(/\D/g, "").slice(0, 8);
-      return e.length <= 2 ? e : e.length <= 4 ? `${e.slice(0, 2)}/${e.slice(2)}` : `${e.slice(0, 2)}/${e.slice(2, 4)}/${e.slice(4)}`;
+    format(e) {
+      const t = e.replace(/\D/g, "").slice(0, 8);
+      return t.length <= 2 ? t : t.length <= 4 ? `${t.slice(0, 2)}/${t.slice(2)}` : `${t.slice(0, 2)}/${t.slice(2, 4)}/${t.slice(4)}`;
     },
-    toRaw: (t) => t.replace(/\D/g, ""),
-    validate(t) {
-      const e = t.replace(/\D/g, "");
-      if (e.length !== 8) return !1;
-      const i = +e.slice(0, 2), s = +e.slice(2, 4), l = +e.slice(4);
-      return i >= 1 && i <= 31 && s >= 1 && s <= 12 && l >= 1900;
+    toRaw: (e) => e.replace(/\D/g, ""),
+    validate(e) {
+      const t = e.replace(/\D/g, "");
+      if (t.length !== 8) return !1;
+      const i = +t.slice(0, 2), s = +t.slice(2, 4), a = +t.slice(4);
+      return i >= 1 && i <= 31 && s >= 1 && s <= 12 && a >= 1900;
     }
   },
   siret: {
     inputmode: "numeric",
     placeholder: "000 000 000 00000",
     live: !0,
-    format(t) {
-      const e = t.replace(/\D/g, "").slice(0, 14);
-      return e.length <= 3 ? e : e.length <= 6 ? `${e.slice(0, 3)} ${e.slice(3)}` : e.length <= 9 ? `${e.slice(0, 3)} ${e.slice(3, 6)} ${e.slice(6)}` : `${e.slice(0, 3)} ${e.slice(3, 6)} ${e.slice(6, 9)} ${e.slice(9)}`;
+    format(e) {
+      const t = e.replace(/\D/g, "").slice(0, 14);
+      return t.length <= 3 ? t : t.length <= 6 ? `${t.slice(0, 3)} ${t.slice(3)}` : t.length <= 9 ? `${t.slice(0, 3)} ${t.slice(3, 6)} ${t.slice(6)}` : `${t.slice(0, 3)} ${t.slice(3, 6)} ${t.slice(6, 9)} ${t.slice(9)}`;
     },
-    toRaw: (t) => t.replace(/\D/g, ""),
-    validate: (t) => t.replace(/\D/g, "").length === 14
+    toRaw: (e) => e.replace(/\D/g, ""),
+    validate: (e) => e.replace(/\D/g, "").length === 14
   }
 };
-function S(t) {
-  return t ? t.replace(/(\d{2})(?=\d)/g, "$1 ").trim() : "";
+function S(e) {
+  return e ? e.replace(/(\d{2})(?=\d)/g, "$1 ").trim() : "";
 }
-function B(t = {}) {
+function B(e = {}) {
   var y, w, b;
-  const e = typeof t.mask == "string" ? t.mask : null, i = typeof t.mask == "object" && ((y = t.mask) != null && y.pattern) ? t.mask.pattern : null, s = typeof t.mask == "object" && ((w = t.mask) != null && w.regex) ? t.mask.regex : null, l = ((b = t.mask) == null ? void 0 : b.hint) ?? null, o = e === "phone-country", h = t.maxDigits ?? 8, p = e === "number" ? {
+  const t = typeof e.mask == "string" ? e.mask : null, i = typeof e.mask == "object" && ((y = e.mask) != null && y.pattern) ? e.mask.pattern : null, s = typeof e.mask == "object" && ((w = e.mask) != null && w.regex) ? e.mask.regex : null, a = ((b = e.mask) == null ? void 0 : b.hint) ?? null, o = t === "phone-country", u = e.maxDigits ?? 8, p = t === "number" ? {
     inputmode: "numeric",
-    placeholder: t.placeholder ?? "",
+    placeholder: e.placeholder ?? "",
     live: !0,
-    format: (a) => a.replace(/\D/g, "").slice(0, h),
-    toRaw: (a) => a.replace(/\D/g, ""),
-    validate: (a) => !a || a.length <= h
-  } : null, r = e && !o ? p ?? A[e] : null, u = E(t.country ?? "FR") ?? R[0], m = {
-    raw: String(t.value ?? ""),
+    format: (r) => r.replace(/\D/g, "").slice(0, u),
+    toRaw: (r) => r.replace(/\D/g, ""),
+    validate: (r) => !r || r.length <= u
+  } : null, n = t && !o ? p ?? A[t] : null, h = E(e.country ?? "FR") ?? k[0], m = {
+    raw: String(e.value ?? ""),
     display: "",
-    value: String(t.value ?? ""),
-    placeholder: t.placeholder ?? (r == null ? void 0 : r.placeholder) ?? "",
-    disabled: t.disabled ?? !1,
-    prefix: t.prefix ?? null,
-    suffix: t.suffix ?? null,
+    value: String(e.value ?? ""),
+    placeholder: e.placeholder ?? (n == null ? void 0 : n.placeholder) ?? "",
+    disabled: e.disabled ?? !1,
+    prefix: e.prefix ?? null,
+    suffix: e.suffix ?? null,
     focused: !1,
-    rxHint: l,
+    rxHint: a,
     init() {
       if (o) {
         this._initPhoneCountry();
         return;
       }
-      this.display = this._fmt(this.raw, !1), this.$watch("value", (a) => {
-        const n = String(a ?? "");
-        n !== this.raw && (this.raw = n, this.display = this._fmt(n, this.focused));
+      this.display = this._fmt(this.raw, !1), this.$watch("value", (r) => {
+        const l = String(r ?? "");
+        l !== this.raw && (this.raw = l, this.display = this._fmt(l, this.focused));
       });
     },
     get inputmode() {
-      return o ? "tel" : (r == null ? void 0 : r.inputmode) ?? "text";
+      return o ? "tel" : (n == null ? void 0 : n.inputmode) ?? "text";
     },
     get isValid() {
-      var a, n;
+      var r, l;
       if (o) {
         if (!this.phoneNumber) return !0;
         const d = this.phoneNumber.length;
-        return d >= Math.min(6, ((a = this.country) == null ? void 0 : a.digits) ?? 9) && d <= (((n = this.country) == null ? void 0 : n.digits) ?? 15);
+        return d >= Math.min(6, ((r = this.country) == null ? void 0 : r.digits) ?? 9) && d <= (((l = this.country) == null ? void 0 : l.digits) ?? 15);
       }
-      return this.raw ? r != null && r.validate ? r.validate(this.display) : s ? new RegExp(s).test(this.raw) : !0 : !0;
+      return this.raw ? n != null && n.validate ? n.validate(this.display) : s ? new RegExp(s).test(this.raw) : !0 : !0;
     },
-    _fmt(a, n) {
-      return r ? r.format(a, n) : i ? this._patternMask(a, i) : a;
+    _fmt(r, l) {
+      return n ? n.format(r, l) : i ? this._patternMask(r, i) : r;
     },
-    _toRaw(a) {
-      return r != null && r.toRaw ? r.toRaw(a) : i ? a.replace(/[^A-Z0-9]/gi, "") : a;
+    _toRaw(r) {
+      return n != null && n.toRaw ? n.toRaw(r) : i ? r.replace(/[^A-Z0-9]/gi, "") : r;
     },
-    _patternMask(a, n) {
-      const d = a.replace(/[^A-Z0-9]/gi, "");
+    _patternMask(r, l) {
+      const d = r.replace(/[^A-Z0-9]/gi, "");
       let c = "", f = 0;
-      for (let x = 0; x < n.length && f < d.length; x++) {
-        const $ = n[x], g = d[f];
-        if ($ === "#") {
+      for (let $ = 0; $ < l.length && f < d.length; $++) {
+        const x = l[$], g = d[f];
+        if (x === "#") {
           if (!/\d/.test(g)) break;
           c += g, f++;
-        } else if ($ === "A") {
+        } else if (x === "A") {
           if (!/[A-Za-z]/.test(g)) break;
           c += g.toUpperCase(), f++;
-        } else $ === "*" ? (c += g.toUpperCase(), f++) : (c += $, g === $ && f++);
+        } else x === "*" ? (c += g.toUpperCase(), f++) : (c += x, g === x && f++);
       }
       return c;
     },
     onFocus() {
-      this.focused = !0, r != null && r.focusDisplay && (this.display = r.focusDisplay(this.raw), this.$nextTick(() => {
-        var a;
-        return (a = this.$refs.input) == null ? void 0 : a.select();
+      this.focused = !0, n != null && n.focusDisplay && (this.display = n.focusDisplay(this.raw), this.$nextTick(() => {
+        var r;
+        return (r = this.$refs.input) == null ? void 0 : r.select();
       }));
     },
-    onInput(a) {
-      const n = a.target, d = this.display.length;
-      if (r && r.live === !1 ? (this.display = n.value, this.raw = this._toRaw(n.value)) : (this.raw = this._toRaw(n.value), this.display = this._fmt(this.raw, !0)), this.value = this.raw, this.$dispatch("input", this.raw), r != null && r.live || i) {
+    onInput(r) {
+      const l = r.target, d = this.display.length;
+      if (n && n.live === !1 ? (this.display = l.value, this.raw = this._toRaw(l.value)) : (this.raw = this._toRaw(l.value), this.display = this._fmt(this.raw, !0)), this.value = this.raw, this.$dispatch("input", this.raw), n != null && n.live || i) {
         const c = this.display.length - d;
         c > 0 && this.$nextTick(() => {
-          if (!n.isConnected) return;
-          const f = Math.min(n.selectionStart + c, this.display.length);
-          n.setSelectionRange(f, f);
+          if (!l.isConnected) return;
+          const f = Math.min(l.selectionStart + c, this.display.length);
+          l.setSelectionRange(f, f);
         });
       }
     },
     onBlur() {
-      if (this.focused = !1, r != null && r.live) {
-        if (e != null && e.startsWith("money-")) {
-          const a = this._toRaw(this.display);
+      if (this.focused = !1, n != null && n.live) {
+        if (t != null && t.startsWith("money-")) {
+          const r = this._toRaw(this.display);
           if (!String(this.display).trim()) {
             this.raw = "", this.display = "", this.value = "", this.$dispatch("change", "");
             return;
           }
-          const n = parseFloat(String(a).replace(",", "."));
-          isNaN(n) || (this.raw = String(n), this.display = this._fmt(this.raw, !1), this.value = this.raw, this.$dispatch("input", this.raw), this.$dispatch("change", this.raw));
+          const l = parseFloat(String(r).replace(",", "."));
+          isNaN(l) || (this.raw = String(l), this.display = this._fmt(this.raw, !1), this.value = this.raw, this.$dispatch("input", this.raw), this.$dispatch("change", this.raw));
           return;
         }
         this.$dispatch("change", this.raw);
         return;
       }
-      if (r && !r.live) {
-        const a = this._toRaw(this.display), n = parseFloat(a.replace(",", "."));
-        isNaN(n) ? (this.raw = "", this.display = "", this.value = "") : (this.raw = String(n), this.display = this._fmt(this.raw, !1), this.value = this.raw, this.$dispatch("input", this.raw), this.$dispatch("change", this.raw));
+      if (n && !n.live) {
+        const r = this._toRaw(this.display), l = parseFloat(r.replace(",", "."));
+        isNaN(l) ? (this.raw = "", this.display = "", this.value = "") : (this.raw = String(l), this.display = this._fmt(this.raw, !1), this.value = this.raw, this.$dispatch("input", this.raw), this.$dispatch("change", this.raw));
       } else
         this.$dispatch("change", this.raw);
     }
   };
   return o ? {
     ...m,
-    countries: t.countries ?? R,
-    countryCode: u.code,
-    country: u,
-    dialCode: u.dial,
+    countries: e.countries ?? k,
+    countryCode: h.code,
+    country: h,
+    dialCode: h.dial,
     phoneNumber: "",
     fullPhone: "",
     countryOpen: !1,
@@ -642,13 +683,13 @@ function B(t = {}) {
      * @private
      */
     _initPhoneCountry() {
-      const a = String(t.value ?? "").replace(/\D/g, "");
-      if (a) {
-        const n = this.country.dial.replace(/\D/g, "");
-        a.startsWith(n) ? this.phoneNumber = a.slice(n.length) : this.phoneNumber = a;
+      const r = String(e.value ?? "").replace(/\D/g, "");
+      if (r) {
+        const l = this.country.dial.replace(/\D/g, "");
+        r.startsWith(l) ? this.phoneNumber = r.slice(l.length) : this.phoneNumber = r;
       }
-      this.display = S(this.phoneNumber), this._syncPhoneOutputs(), this.$watch("value", (n) => {
-        const d = String(n ?? "").replace(/\s/g, "");
+      this.display = S(this.phoneNumber), this._syncPhoneOutputs(), this.$watch("value", (l) => {
+        const d = String(l ?? "").replace(/\s/g, "");
         d && d !== this.fullPhone && (this.fullPhone = d);
       });
     },
@@ -676,10 +717,10 @@ function B(t = {}) {
      *
      * @param {import('../data/phoneCountries.js').PhoneCountry} c
      */
-    selectCountry(a) {
-      this.country = a, this.countryCode = a.code, this.dialCode = a.dial, this.countryOpen = !1;
-      const n = a.digits ?? 15;
-      this.phoneNumber.length > n && (this.phoneNumber = this.phoneNumber.slice(0, n), this.display = S(this.phoneNumber)), this._syncPhoneOutputs(), this.$dispatch("country-change", {
+    selectCountry(r) {
+      this.country = r, this.countryCode = r.code, this.dialCode = r.dial, this.countryOpen = !1;
+      const l = r.digits ?? 15;
+      this.phoneNumber.length > l && (this.phoneNumber = this.phoneNumber.slice(0, l), this.display = S(this.phoneNumber)), this._syncPhoneOutputs(), this.$dispatch("country-change", {
         country: this.countryCode,
         dialCode: this.dialCode
       });
@@ -689,9 +730,9 @@ function B(t = {}) {
      *
      * @param {Event} event
      */
-    onPhoneInput(a) {
+    onPhoneInput(r) {
       var c;
-      const n = ((c = this.country) == null ? void 0 : c.digits) ?? 15, d = a.target.value.replace(/\D/g, "").slice(0, n);
+      const l = ((c = this.country) == null ? void 0 : c.digits) ?? 15, d = r.target.value.replace(/\D/g, "").slice(0, l);
       this.phoneNumber = d, this.display = S(d), this._syncPhoneOutputs(), this.$dispatch("input", this.fullPhone);
     },
     onPhoneFocus() {
@@ -705,11 +746,11 @@ function B(t = {}) {
      * @private
      */
     _syncPhoneOutputs() {
-      const a = (this.dialCode ?? "").replace(/\s/g, ""), n = this.phoneNumber ?? "";
-      this.fullPhone = n ? `${a}${n}` : a, this.raw = n, this.value = this.fullPhone, this.$dispatch("phone-change", {
+      const r = (this.dialCode ?? "").replace(/\s/g, ""), l = this.phoneNumber ?? "";
+      this.fullPhone = l ? `${r}${l}` : r, this.raw = l, this.value = this.fullPhone, this.$dispatch("phone-change", {
         country: this.countryCode,
         dialCode: this.dialCode,
-        number: n,
+        number: l,
         full: this.fullPhone
       });
     },
@@ -718,23 +759,23 @@ function B(t = {}) {
      * @private
      */
     _positionCountryPanel() {
-      const a = this.$refs.countryTrigger, n = this.$refs.countryPanel;
-      if (!a || !n) return;
-      const d = 4, c = a.getBoundingClientRect(), f = n.offsetHeight || 220, x = Math.max(n.offsetWidth || 220, 220), $ = window.innerHeight;
+      const r = this.$refs.countryTrigger, l = this.$refs.countryPanel;
+      if (!r || !l) return;
+      const d = 4, c = r.getBoundingClientRect(), f = l.offsetHeight || 220, $ = Math.max(l.offsetWidth || 220, 220), x = window.innerHeight;
       let g = c.bottom + d;
-      g + f > $ - 8 && (g = c.top - f - d), this.countryPanelStyle = {
+      g + f > x - 8 && (g = c.top - f - d), this.countryPanelStyle = {
         position: "fixed",
         top: `${Math.round(g)}px`,
         left: `${Math.round(c.left)}px`,
-        width: `${Math.round(x)}px`,
+        width: `${Math.round($)}px`,
         zIndex: 250
       };
     }
   } : m;
 }
 const P = 320;
-function j(t) {
-  t.store("toast", {
+function j(e) {
+  e.store("toast", {
     items: [],
     _id: 0,
     transitionMs: P,
@@ -749,61 +790,61 @@ function j(t) {
      * @param {{ label: string, fn?: () => void }|null} [opts.action=null]
      * @returns {number} Identifiant du toast
      */
-    add({ type: e = "info", title: i = "", message: s = "", duration: l = 4500, action: o = null }) {
-      const h = ++this._id;
-      return this.items.push({ id: h, type: e, title: i, message: s, action: o, visible: !0 }), l > 0 && setTimeout(() => this.dismiss(h), l), h;
+    add({ type: t = "info", title: i = "", message: s = "", duration: a = 4500, action: o = null }) {
+      const u = ++this._id;
+      return this.items.push({ id: u, type: t, title: i, message: s, action: o, visible: !0 }), a > 0 && setTimeout(() => this.dismiss(u), a), u;
     },
     /**
      * Masque puis retire un toast après la transition de sortie.
      *
      * @param {number} id
      */
-    dismiss(e) {
-      const i = this.items.find((s) => s.id === e);
+    dismiss(t) {
+      const i = this.items.find((s) => s.id === t);
       i && (i.visible = !1, setTimeout(() => {
-        this.items = this.items.filter((s) => s.id !== e);
+        this.items = this.items.filter((s) => s.id !== t);
       }, P));
     },
     /** Retire tous les toasts avec animation. */
     clear() {
-      this.items.forEach((e) => e.visible = !1), setTimeout(() => this.items = [], P);
+      this.items.forEach((t) => t.visible = !1), setTimeout(() => this.items = [], P);
     },
     /**
      * @param {string} message
      * @param {string} [title='Succès']
      * @param {Object} [opts]
      */
-    success(e, i = "Succès", s = {}) {
-      return this.add({ type: "success", title: i, message: e, ...s });
+    success(t, i = "Succès", s = {}) {
+      return this.add({ type: "success", title: i, message: t, ...s });
     },
     /**
      * @param {string} message
      * @param {string} [title='Erreur']
      * @param {Object} [opts]
      */
-    error(e, i = "Erreur", s = {}) {
-      return this.add({ type: "error", title: i, message: e, ...s });
+    error(t, i = "Erreur", s = {}) {
+      return this.add({ type: "error", title: i, message: t, ...s });
     },
     /**
      * @param {string} message
      * @param {string} [title='Attention']
      * @param {Object} [opts]
      */
-    warning(e, i = "Attention", s = {}) {
-      return this.add({ type: "warning", title: i, message: e, ...s });
+    warning(t, i = "Attention", s = {}) {
+      return this.add({ type: "warning", title: i, message: t, ...s });
     },
     /**
      * @param {string} message
      * @param {string} [title='Info']
      * @param {Object} [opts]
      */
-    info(e, i = "Info", s = {}) {
-      return this.add({ type: "info", title: i, message: e, ...s });
+    info(t, i = "Info", s = {}) {
+      return this.add({ type: "info", title: i, message: t, ...s });
     }
-  }), window.$toast = t.store("toast");
+  }), window.$toast = e.store("toast");
 }
-function U(t) {
-  j(t), t.data("apSelect", k), t.data("apDropdown", C), t.data("apInputText", _), t.data("apInputTags", N), t.data("apSwitch", D), t.data("apSlider", M), t.data("apForm", O), t.data("apInputMask", B);
+function U(e) {
+  j(e), e.data("apSelect", T), e.data("apDropdown", C), e.data("apInputText", _), e.data("apInputTags", N), e.data("apSwitch", D), e.data("apSlider", M), e.data("apForm", O), e.data("apInputMask", B);
 }
 export {
   P as TOAST_TRANSITION_MS,
@@ -812,7 +853,7 @@ export {
   B as apInputMask,
   N as apInputTags,
   _ as apInputText,
-  k as apSelect,
+  T as apSelect,
   M as apSlider,
   D as apSwitch,
   U as default,
