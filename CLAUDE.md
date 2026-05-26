@@ -262,6 +262,90 @@ docker build -t ap-docs .  # build prod nginx
 
 ---
 
+## Mise à jour obligatoire du README
+
+**Toute modification qui impose une action à l'utilisateur final doit être reflétée dans `README.md` avant de committer.**
+
+Exemples de changements qui déclenchent une mise à jour du README :
+
+| Changement | Section README à mettre à jour |
+|---|---|
+| Nouvel export dans `package.json` (`"./style"`, etc.) | Installation — ajouter l'import |
+| Nouvelle prop obligatoire sur un composant | Exemple de code de la section correspondante |
+| Changement d'API publique (méthode renommée, etc.) | Tous les exemples de code qui l'utilisent |
+| Nouveau prérequis (peer dep, meta tag, etc.) | Prérequis / étapes d'intégration |
+| Nouveau script npm utile | Tableau Scripts |
+| Changement du nom du package | Toutes les occurrences `@momoledev/alpine-components` |
+
+**Règle concrète :** si un utilisateur suit le README de bout en bout et que ça ne fonctionne pas à cause de ton changement, le README est incomplet. Corrige-le dans le même commit.
+
+---
+
+## Skill agent — `/alpine-components`
+
+Le fichier `.claude/commands/alpine-components.md` est un **skill Claude Code** invocable via `/alpine-components`.
+Le fichier `alpine-components.md` (racine) est la version standalone pour les autres agents et éditeurs.
+
+### Quand mettre à jour ces fichiers
+
+Mettre à jour **les deux fichiers simultanément** dès qu'un de ces cas se présente :
+- Nouveau composant ajouté
+- Nouvelles props ou méthodes publiques sur un composant existant
+- Nouvelles classes CSS `ap-*` dans `src/ap-components.css`
+- Changement de signature d'une factory
+- Nouveau pattern de combinaison recommandé
+
+### Structure du skill
+
+Chaque section suit ce format strict pour rester lisible par n'importe quel modèle :
+
+```
+## ap-nom  (apNomComposant)
+
+\`\`\`html
+<!-- snippet minimal -->
+<!-- snippet avec ap-* classes -->
+\`\`\`
+
+**Props :** `prop1` `prop2` ...
+**Classes :** `.ap-nom` `.ap-nom-element` ...
+**État :** `.is-modifier` ...
+```
+
+### Comment les agents utilisent ce skill
+
+**Claude Code (ce projet) :**
+```
+/alpine-components
+```
+
+**Claude Code (projet consommateur) :**
+```bash
+# Copier le fichier dans le projet
+curl -O https://raw.githubusercontent.com/momostifler96/alpine-components/master/alpine-components.md
+# Puis dans Claude Code :
+/alpine-components   # si copié dans .claude/commands/
+# ou demander à Claude de lire le fichier comme contexte
+```
+
+**Cursor / Windsurf / GitHub Copilot :**
+```
+@alpine-components.md  générer un formulaire avec apSelect et apForm
+```
+
+**Claude.ai / ChatGPT / autre LLM :**
+```
+[joindre ou coller le contenu de alpine-components.md]
+"Génère un formulaire complet avec les classes ap-* pour..."
+```
+
+**Commande curl pour récupérer le fichier de référence :**
+```bash
+curl -O https://raw.githubusercontent.com/momostifler96/alpine-components/master/alpine-components.md
+```
+
+---
+
 ## Ce qu'il ne faut pas faire
 
 - Ne pas modifier `dist/` à la main — toujours passer par `npm run build`.
@@ -270,3 +354,4 @@ docker build -t ap-docs .  # build prod nginx
 - Ne pas émettre d'événements DOM personnalisés depuis `init()` au démarrage — uniquement en réponse à une action utilisateur ou un `$watch`.
 - Ne pas toucher à `src/main.js` pour la lib — ce fichier n'est que pour le playground de démo.
 - Ne pas modifier `vite.config.js` pour le build lib — utiliser `vite.lib.config.js`.
+- Ne pas faire un changement visible pour l'utilisateur sans mettre à jour `README.md` dans le même commit.
