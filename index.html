@@ -254,7 +254,7 @@ npm run dev
       <div class="max-w-6xl mx-auto px-6 pt-16 pb-4">
         <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700 mb-2">Playground</span>
         <h2 class="text-2xl font-bold text-gray-900">Démonstrations interactives</h2>
-        <p class="text-gray-500 mt-1 text-sm max-w-2xl">Exemples copiables. Chaque section correspond à un composant documenté dans <a href="/documentation.html" class="text-indigo-600 hover:underline">documentation.html</a> et <code class="text-gray-600">docs/composants.md</code>.</p>
+        <p class="text-gray-500 mt-1 text-sm max-w-2xl">Exemples copiables. Chaque section correspond à un composant documenté dans <a href="/documentation.html#composants" class="text-indigo-600 hover:underline">documentation.html</a>.</p>
       </div>
       <div class="max-w-6xl mx-auto px-6 pb-20 space-y-20">
 
@@ -268,7 +268,7 @@ npm run dev
           <h2 class="text-2xl font-bold">Select</h2>
           <p class="text-gray-500 mt-1 text-sm">Sélection simple ou multiple avec préfixes, suffixes et recherche intégrée.</p>
         </div>
-        <a href="/docs/composants.md#select" class="text-xs font-medium text-indigo-600 hover:underline shrink-0">API →</a>
+        <a href="/documentation.html#composants" class="text-xs font-medium text-indigo-600 hover:underline shrink-0">API →</a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1920,21 +1920,21 @@ $store.toast.dismiss(id)</pre>
           <div class="text-indigo-600 font-semibold group-hover:underline">Documentation web</div>
           <p class="text-sm text-gray-500 mt-1">Installation, architecture, API — dans le navigateur.</p>
         </a>
-        <a href="/docs/installation.md" class="p-5 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 transition-all">
-          <div class="font-semibold text-gray-900">installation.md</div>
-          <p class="text-sm text-gray-500 mt-1">Prérequis et checklist d’intégration.</p>
+        <a href="/documentation.html#installation" class="p-5 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 hover:shadow-sm transition-all">
+          <div class="font-semibold text-gray-900">Installation</div>
+          <p class="text-sm text-gray-500 mt-1">npm, CDN, plugin Alpine, import du style.</p>
         </a>
-        <a href="/docs/composants.md" class="p-5 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 transition-all">
-          <div class="font-semibold text-gray-900">composants.md</div>
-          <p class="text-sm text-gray-500 mt-1">Référence API complète.</p>
+        <a href="/documentation.html#composants" class="p-5 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 hover:shadow-sm transition-all">
+          <div class="font-semibold text-gray-900">Composants</div>
+          <p class="text-sm text-gray-500 mt-1">Référence API — props, état, méthodes.</p>
         </a>
-        <a href="/docs/livewire.md" class="p-5 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 transition-all">
-          <div class="font-semibold text-gray-900">livewire.md</div>
-          <p class="text-sm text-gray-500 mt-1">Patterns Blade et wire:model.</p>
+        <a href="/documentation.html#livewire" class="p-5 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 hover:shadow-sm transition-all">
+          <div class="font-semibold text-gray-900">Livewire</div>
+          <p class="text-sm text-gray-500 mt-1">Patterns Blade et wire:model.live.</p>
         </a>
-        <a href="/docs/laravel.md" class="p-5 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 transition-all sm:col-span-2">
-          <div class="font-semibold text-gray-900">laravel.md + examples/laravel/</div>
-          <p class="text-sm text-gray-500 mt-1">apForm, StoreMemberRequest, réponse 422 JSON, Blade create & team.</p>
+        <a href="/documentation.html#laravel" class="p-5 bg-white border border-gray-200 rounded-2xl hover:border-indigo-300 hover:shadow-sm transition-all sm:col-span-2">
+          <div class="font-semibold text-gray-900">Laravel + Vite</div>
+          <p class="text-sm text-gray-500 mt-1">apForm, erreurs 422, CSRF, layout Blade, vite.config.</p>
         </a>
       </div>
     </section>
@@ -1970,8 +1970,8 @@ $store.toast.dismiss(id)</pre>
 &lt;/div&gt;</pre>
         </div>
         <p class="text-sm text-indigo-300/80 mt-6">
-          <a href="/docs/livewire.md" class="underline hover:text-white">Guide Livewire complet</a>
-          · <a href="/documentation.html#livewire" class="underline hover:text-white">Documentation web</a>
+          <a href="/documentation.html#livewire" class="underline hover:text-white">Documentation Livewire complète</a>
+          · <a href="/documentation.html#laravel" class="underline hover:text-white">Intégration Laravel</a>
         </p>
       </div>
     </section>
@@ -1995,7 +1995,7 @@ $store.toast.dismiss(id)</pre>
         <a href="#catalogue" class="hover:text-indigo-600">Catalogue</a>
         <a href="#playground" class="hover:text-indigo-600">Playground</a>
         <a href="/documentation.html" class="hover:text-indigo-600">Documentation</a>
-        <a href="/docs/README.md" class="hover:text-indigo-600">docs/</a>
+        <a href="/documentation.html" class="hover:text-indigo-600">Docs</a>
       </nav>
       <p class="text-xs text-gray-400">© Alpine Components — Livewire ready</p>
     </div>

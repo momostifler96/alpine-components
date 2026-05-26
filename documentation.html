@@ -5,11 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Documentation — Alpine Components</title>
   <link rel="stylesheet" href="/src/style.css">
-  <style>[x-cloak] { display: none !important; }</style>
+  <style>
+    [x-cloak] { display: none !important; }
+
+    .prose-doc h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0; }
+    .prose-doc h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .prose-doc p  { font-size: 0.875rem; color: #4b5563; line-height: 1.65; margin-top: 0.75rem; }
+    .prose-doc a  { color: #4f46e5; }
+    .prose-doc a:hover { text-decoration: underline; }
+    .prose-doc code { font-size: 0.8125rem; background: #f1f5f9; padding: 0.125rem 0.375rem; border-radius: 0.375rem; }
+    .prose-doc pre { margin-top: 1rem; }
+    .prose-doc pre code { background: transparent; padding: 0; font-size: 0.8125rem; }
+    .prose-doc table { width: 100%; font-size: 0.875rem; border-collapse: collapse; margin-top: 1rem; }
+    .prose-doc th { background: #f8fafc; padding: 0.5rem 1rem; font-weight: 600; text-align: left; border: 1px solid #e2e8f0; }
+    .prose-doc td { padding: 0.5rem 1rem; border: 1px solid #e2e8f0; }
+    .prose-doc td:first-child { font-family: ui-monospace, monospace; color: #4f46e5; font-size: 0.8125rem; }
+    .prose-doc ol { font-size: 0.875rem; color: #4b5563; padding-left: 1.25rem; margin-top: 0.75rem; line-height: 1.8; }
+    .prose-doc ul { font-size: 0.875rem; color: #4b5563; padding-left: 1.25rem; margin-top: 0.75rem; line-height: 1.8; list-style: disc; }
+
+    .nav-active { color: #4f46e5; font-weight: 600; }
+    .section-rule { border-top: 1px solid #e2e8f0; padding-top: 0.5rem; margin-top: 0.5rem; }
+  </style>
 </head>
 <body class="bg-slate-50 text-gray-900 min-h-screen" x-data="{ sidebar: false }">
 
-  <header class="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-gray-200 shadow-sm">
     <div class="max-w-6xl mx-auto px-6 py-3 flex items-center gap-3">
       <a href="/" class="flex items-center gap-3 group">
         <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shrink-0">
@@ -26,7 +47,8 @@
       <nav class="ml-auto hidden md:flex items-center gap-5 text-sm text-gray-500">
         <a href="/" class="hover:text-indigo-600 transition-colors">Playground</a>
         <a href="/#catalogue" class="hover:text-indigo-600 transition-colors">Composants</a>
-        <a href="https://github.com" class="hover:text-indigo-600 transition-colors" title="Remplacez par l’URL de votre dépôt">GitHub</a>
+        <a href="https://github.com/momostifler96/alpine-components" class="hover:text-indigo-600 transition-colors" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.npmjs.com/package/@momoledev/alpine-components" class="hover:text-indigo-600 transition-colors" target="_blank" rel="noopener">npm</a>
       </nav>
       <button type="button" class="md:hidden ml-auto p-2 text-gray-500" @click="sidebar = !sidebar" aria-label="Menu">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -35,155 +57,517 @@
   </header>
 
   <div class="max-w-6xl mx-auto px-6 py-10 flex gap-10">
-    <aside class="hidden md:block w-52 shrink-0">
-      <nav class="sticky top-24 text-sm space-y-1 text-gray-600">
-        <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Sommaire</p>
-        <a href="#intro" class="block py-1 hover:text-indigo-600">Introduction</a>
-        <a href="#installation" class="block py-1 hover:text-indigo-600">Installation</a>
-        <a href="#architecture" class="block py-1 hover:text-indigo-600">Architecture</a>
-        <a href="#enregistrement" class="block py-1 hover:text-indigo-600">Enregistrement</a>
-        <a href="#liaison" class="block py-1 hover:text-indigo-600">Liaison de données</a>
-        <a href="#composants" class="block py-1 hover:text-indigo-600">Composants</a>
-        <a href="#livewire" class="block py-1 hover:text-indigo-600">Livewire</a>
-        <hr class="my-3 border-gray-200">
-        <p class="text-xs text-gray-400">Sources Markdown</p>
-        <a href="/docs/README.md" class="block py-1 text-xs hover:text-indigo-600">docs/README.md</a>
+
+    <!-- Sidebar desktop -->
+    <aside class="hidden md:block w-56 shrink-0">
+      <nav class="sticky top-24 text-sm space-y-0.5 text-gray-600">
+        <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Démarrage</p>
+        <a href="#intro"          class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Introduction</a>
+        <a href="#installation"   class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Installation</a>
+        <a href="#style"          class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Style (classes ap-*)</a>
+        <a href="#cdn"            class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Via CDN</a>
+        <a href="#laravel"        class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Laravel + Vite</a>
+
+        <div class="section-rule"></div>
+        <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Architecture</p>
+        <a href="#architecture"   class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Architecture</a>
+        <a href="#liaison"        class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Liaison de données</a>
+        <a href="#livewire"       class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Livewire</a>
+
+        <div class="section-rule"></div>
+        <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Agents IA</p>
+        <a href="#skill"          class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Skill /alpine-components</a>
+
+        <div class="section-rule"></div>
+        <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Composants</p>
+        <a href="#composants"     class="block py-1.5 px-2 rounded-lg hover:bg-indigo-50 hover:text-indigo-600 transition-colors">Tous les composants</a>
+        <a href="/#select"        class="block py-1.5 px-2 rounded-lg hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-500">apSelect →</a>
+        <a href="/#dropdown"      class="block py-1.5 px-2 rounded-lg hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-500">apDropdown →</a>
+        <a href="/#inputtext"     class="block py-1.5 px-2 rounded-lg hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-500">apInputText →</a>
+        <a href="/#inputtags"     class="block py-1.5 px-2 rounded-lg hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-500">apInputTags →</a>
+        <a href="/#switch"        class="block py-1.5 px-2 rounded-lg hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-500">apSwitch →</a>
+        <a href="/#slider"        class="block py-1.5 px-2 rounded-lg hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-500">apSlider →</a>
+        <a href="/#inputmask"     class="block py-1.5 px-2 rounded-lg hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-500">apInputMask →</a>
+        <a href="/#form"          class="block py-1.5 px-2 rounded-lg hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-500">apForm →</a>
+        <a href="/#toast"         class="block py-1.5 px-2 rounded-lg hover:bg-gray-50 hover:text-gray-800 transition-colors text-gray-500">$store.toast →</a>
       </nav>
     </aside>
 
+    <!-- Sidebar mobile overlay -->
     <aside x-show="sidebar" x-cloak @click.outside="sidebar = false"
       class="md:hidden fixed inset-0 z-50 bg-black/30">
-      <nav class="absolute left-0 top-0 bottom-0 w-64 bg-white p-6 shadow-xl text-sm space-y-2" @click.stop>
-        <a href="#intro" @click="sidebar=false" class="block py-2">Introduction</a>
-        <a href="#installation" @click="sidebar=false" class="block py-2">Installation</a>
-        <a href="#composants" @click="sidebar=false" class="block py-2">Composants</a>
-        <a href="/" class="block py-2 text-indigo-600 font-medium">← Playground</a>
+      <nav class="absolute left-0 top-0 bottom-0 w-64 bg-white p-6 shadow-xl text-sm space-y-1 overflow-y-auto" @click.stop>
+        <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Navigation</p>
+        <a href="#intro"        @click="sidebar=false" class="block py-2 hover:text-indigo-600">Introduction</a>
+        <a href="#installation" @click="sidebar=false" class="block py-2 hover:text-indigo-600">Installation</a>
+        <a href="#style"        @click="sidebar=false" class="block py-2 hover:text-indigo-600">Style (ap-*)</a>
+        <a href="#laravel"      @click="sidebar=false" class="block py-2 hover:text-indigo-600">Laravel + Vite</a>
+        <a href="#skill"        @click="sidebar=false" class="block py-2 hover:text-indigo-600">Skill IA</a>
+        <a href="#composants"   @click="sidebar=false" class="block py-2 hover:text-indigo-600">Composants</a>
+        <a href="/" class="block py-2 text-indigo-600 font-medium mt-2">← Playground</a>
       </nav>
     </aside>
 
-    <article class="flex-1 min-w-0 prose-doc max-w-3xl space-y-14">
+    <!-- Main content -->
+    <article class="flex-1 min-w-0 prose-doc max-w-3xl space-y-16">
 
+      <!-- INTRO -->
       <section id="intro">
         <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-700 mb-3">Documentation</span>
         <h1 class="text-3xl font-bold tracking-tight">Alpine Components</h1>
-        <p class="text-gray-600 mt-3 leading-relaxed">
-          Bibliothèque <strong>headless</strong> de composants UI pour <a href="https://alpinejs.dev/" class="text-indigo-600 underline">Alpine.js</a> 3,
-          stylée avec <a href="https://tailwindcss.com/" class="text-indigo-600 underline">Tailwind CSS</a> 4.
-          Chaque brique = logique JavaScript + markup de référence à copier.
+        <p>
+          Bibliothèque <strong>headless</strong> de composants UI pour <a href="https://alpinejs.dev/" target="_blank">Alpine.js 3</a>,
+          compatible <a href="https://livewire.laravel.com/" target="_blank">Livewire</a> et Laravel.
+          Chaque composant = factory <code>Alpine.data</code> retournant état + méthodes.
+          Vous possédez le HTML et le style.
         </p>
-        <div class="flex flex-wrap gap-2 mt-6">
+        <div class="flex flex-wrap gap-2 mt-5">
           <span class="px-3 py-1 rounded-full text-xs font-medium bg-white border border-gray-200">Alpine.js 3.14+</span>
-          <span class="px-3 py-1 rounded-full text-xs font-medium bg-white border border-gray-200">Tailwind 4</span>
+          <span class="px-3 py-1 rounded-full text-xs font-medium bg-white border border-gray-200">Tailwind CSS 4</span>
           <span class="px-3 py-1 rounded-full text-xs font-medium bg-white border border-gray-200">Livewire ready</span>
-          <span class="px-3 py-1 rounded-full text-xs font-medium bg-white border border-gray-200">Sans runtime UI</span>
+          <span class="px-3 py-1 rounded-full text-xs font-medium bg-white border border-gray-200">ESM + UMD</span>
+          <span class="px-3 py-1 rounded-full text-xs font-medium bg-white border border-gray-200">0 dépendance runtime</span>
+        </div>
+        <div class="mt-5 flex gap-3">
+          <a href="https://www.npmjs.com/package/@momoledev/alpine-components" target="_blank"
+            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors">
+            npm →
+          </a>
+          <a href="https://github.com/momostifler96/alpine-components" target="_blank"
+            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors">
+            GitHub →
+          </a>
         </div>
       </section>
 
+      <!-- INSTALLATION -->
       <section id="installation">
         <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Installation</h2>
-        <pre class="mt-4 p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>git clone &lt;url&gt;
-cd alpine-components
-npm install
-npm run dev</code></pre>
-        <p class="text-sm text-gray-600 mt-4">Pages disponibles : <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">/</code> (playground),
-          <code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm">/documentation.html</code>.</p>
-        <h3 class="text-base font-semibold mt-6">Intégration</h3>
-        <ol class="list-decimal list-inside text-sm text-gray-600 space-y-2 mt-2">
-          <li>Copier <code class="bg-gray-100 px-1 rounded">src/components/</code> (+ utils/data si InputMask)</li>
-          <li>Enregistrer les <code class="bg-gray-100 px-1 rounded">Alpine.data</code> avant <code class="bg-gray-100 px-1 rounded">Alpine.start()</code></li>
-          <li>Importer Tailwind + styles slider</li>
-          <li>Copier le markup depuis le playground</li>
-        </ol>
-        <p class="text-sm mt-4"><a href="/docs/installation.md" class="text-indigo-600 hover:underline">docs/installation.md</a> — version complète.</p>
+        <pre class="mt-4 p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>npm install @momoledev/alpine-components</code></pre>
+
+        <h3 class="mt-8">Avec le plugin Alpine (recommandé)</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>import '@momoledev/alpine-components/style'   // classes ap-* + tokens CSS
+import Alpine from 'alpinejs'
+import AlpineComponents from '@momoledev/alpine-components'
+
+Alpine.plugin(AlpineComponents)
+Alpine.start()</code></pre>
+
+        <h3 class="mt-6">Importer uniquement certains composants</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>import Alpine from 'alpinejs'
+import { apSelect, apForm, registerToastStore } from '@momoledev/alpine-components'
+
+registerToastStore(Alpine)
+Alpine.data('apSelect', apSelect)
+Alpine.data('apForm', apForm)
+Alpine.start()</code></pre>
+
+        <h3 class="mt-6">Sans style (headless pur)</h3>
+        <p>Omettez l'import du style et appliquez vos propres classes Tailwind.</p>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>import Alpine from 'alpinejs'
+import AlpineComponents from '@momoledev/alpine-components'
+
+Alpine.plugin(AlpineComponents)
+Alpine.start()</code></pre>
       </section>
 
+      <!-- STYLE -->
+      <section id="style">
+        <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Style — classes <code>ap-*</code></h2>
+        <p>
+          Le package inclut un fichier CSS optionnel avec des classes <code>ap-*</code> prêtes à l'emploi,
+          basées sur des variables CSS <code>--ap-*</code> entièrement personnalisables.
+        </p>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>import '@momoledev/alpine-components/style'</code></pre>
+        <p>Ou dans un fichier CSS (Laravel <code>app.css</code>) :</p>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>@import '@momoledev/alpine-components/style';</code></pre>
+
+        <h3 class="mt-6">Personnaliser les tokens CSS</h3>
+        <p>Surchargez les variables <code>--ap-*</code> après l'import :</p>
+        <pre class="p-4 bg-slate-100 border border-gray-200 rounded-xl text-sm overflow-x-auto text-gray-800"><code>:root {
+  --ap-primary:        #10b981;   /* couleur principale */
+  --ap-primary-hover:  #059669;
+  --ap-primary-light:  #ecfdf5;
+  --ap-primary-ring:   #a7f3d0;
+  --ap-radius:         0.5rem;    /* coins des champs */
+  --ap-height:         2.25rem;   /* hauteur des champs */
+}</code></pre>
+
+        <h3 class="mt-6">Exemple avec classes <code>ap-*</code></h3>
+        <pre class="p-4 bg-slate-100 border border-gray-200 rounded-xl text-sm overflow-x-auto text-gray-800"><code>&lt;form class="ap-form"
+      x-data="apForm({ data: { email: '' } })"
+      @submit.prevent="submit('/api/register')"&gt;
+
+  &lt;div class="ap-form-field"&gt;
+    &lt;label class="ap-form-label is-required"&gt;Email&lt;/label&gt;
+    &lt;input class="ap-input" :class="{ 'is-error': hasError('email') }"
+           x-model="data.email" type="email" placeholder="vous@exemple.com"&gt;
+    &lt;p class="ap-form-error" x-show="hasError('email')" x-text="getError('email')"&gt;&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit" class="ap-form-submit" :disabled="loading"&gt;
+    &lt;span x-show="!loading"&gt;S'inscrire&lt;/span&gt;
+    &lt;span x-show="loading"&gt;Envoi…&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/form&gt;</code></pre>
+      </section>
+
+      <!-- CDN -->
+      <section id="cdn">
+        <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Via CDN</h2>
+        <p>Sans npm, ajoutez directement dans votre HTML :</p>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>&lt;!-- Style prédéfini --&gt;
+&lt;link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@momoledev/alpine-components/dist/style.css"&gt;
+
+&lt;!-- Alpine.js --&gt;
+&lt;script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- Composants (ESM) --&gt;
+&lt;script type="module"&gt;
+  import AlpineComponents from 'https://cdn.jsdelivr.net/npm/@momoledev/alpine-components/dist/index.mjs'
+  document.addEventListener('alpine:init', () =&gt; Alpine.plugin(AlpineComponents))
+&lt;/script&gt;</code></pre>
+      </section>
+
+      <!-- LARAVEL -->
+      <section id="laravel">
+        <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Laravel + Vite</h2>
+
+        <h3 class="mt-5">1. Installer</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>npm install @momoledev/alpine-components</code></pre>
+
+        <h3 class="mt-5">2. Importer le style dans <code>resources/css/app.css</code></h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>@import '@momoledev/alpine-components/style';</code></pre>
+        <p>Alternative — dans <code>resources/js/app.js</code> :</p>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>import '@momoledev/alpine-components/style'</code></pre>
+
+        <h3 class="mt-5">3. Enregistrer dans <code>resources/js/app.js</code></h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>import Alpine from 'alpinejs'
+import AlpineComponents from '@momoledev/alpine-components'
+
+Alpine.plugin(AlpineComponents)
+
+window.Alpine = Alpine
+Alpine.start()</code></pre>
+
+        <h3 class="mt-5">4. Layout Blade — conteneur Toast</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="csrf-token" content="{{ csrf_token() }}"&gt;
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+&lt;/head&gt;
+&lt;body&gt;
+    @yield('content')
+
+    &lt;div x-data class="ap-toast-container" aria-live="polite"&gt;
+        &lt;template x-for="t in $store.toast.items" :key="t.id"&gt;
+            &lt;div class="ap-toast" :class="`ap-toast-${t.type}`" x-show="t.visible" x-transition&gt;
+                &lt;div class="ap-toast-body"&gt;
+                    &lt;p class="ap-toast-title" x-show="t.title" x-text="t.title"&gt;&lt;/p&gt;
+                    &lt;p class="ap-toast-message" x-text="t.message"&gt;&lt;/p&gt;
+                &lt;/div&gt;
+                &lt;button class="ap-toast-dismiss" @click="$store.toast.dismiss(t.id)"&gt;✕&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/template&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <h3 class="mt-5">5. Formulaire Blade complet</h3>
+        <pre class="p-4 bg-slate-100 border border-gray-200 rounded-xl text-sm overflow-x-auto text-gray-800"><code>&lt;form class="ap-form"
+      x-data="apForm({
+          data: { name: '', email: '', role: null },
+          errors: @json($errors-&gt;getMessages()),
+      })"
+      @submit.prevent="submit('{{ route('members.store') }}')"&gt;
+
+    &lt;div class="ap-form-field"&gt;
+        &lt;label class="ap-form-label is-required"&gt;Nom&lt;/label&gt;
+        &lt;input class="ap-input" :class="{ 'is-error': hasError('name') }"
+               x-model="data.name" placeholder="Jean Dupont"&gt;
+        &lt;p class="ap-form-error" x-show="hasError('name')" x-text="getError('name')"&gt;&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class="ap-form-field"&gt;
+        &lt;label class="ap-form-label is-required"&gt;Rôle&lt;/label&gt;
+        &lt;div x-data="apSelect({ options: [
+                 { label: 'Développeur', value: 'dev' },
+                 { label: 'Designer',    value: 'design' },
+             ] })"
+             x-modelable="value" x-model="data.role"
+             class="ap-select" @click.outside="close()"&gt;
+            &lt;button class="ap-select-trigger" :class="{ 'is-error': hasError('role'), 'is-open': open }"
+                    @click="toggleOpen()"&gt;
+                &lt;span class="ap-select-trigger-label"
+                      :class="{ 'is-placeholder': !hasValue }"
+                      x-text="display || 'Choisir un rôle'"&gt;&lt;/span&gt;
+                &lt;svg class="ap-select-trigger-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/&gt;&lt;/svg&gt;
+            &lt;/button&gt;
+            &lt;div class="ap-select-panel" x-show="open" x-cloak&gt;
+                &lt;ul class="ap-select-options"&gt;
+                    &lt;template x-for="opt in filteredOptions" :key="opt.value"&gt;
+                        &lt;li class="ap-select-option"
+                            :class="{ 'is-selected': isSelected(opt.value) }"
+                            @click="select(opt)" x-text="opt.label"&gt;&lt;/li&gt;
+                    &lt;/template&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;p class="ap-form-error" x-show="hasError('role')" x-text="getError('role')"&gt;&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class="ap-form-success" x-show="success"&gt;✓ Enregistré.&lt;/div&gt;
+
+    &lt;button type="submit" class="ap-form-submit" :disabled="loading"&gt;
+        &lt;span x-show="!loading"&gt;Enregistrer&lt;/span&gt;
+        &lt;span x-show="loading"&gt;Envoi…&lt;/span&gt;
+    &lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        <p><code>apForm</code> lit <code>meta[name="csrf-token"]</code> automatiquement et gère les réponses <strong>422</strong> de Laravel.</p>
+      </section>
+
+      <!-- ARCHITECTURE -->
       <section id="architecture">
         <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Architecture</h2>
-        <p class="text-sm text-gray-600 mt-4 leading-relaxed">
-          Modèle <strong>headless</strong> : la factory retourne état + méthodes ; vous possédez le HTML/Tailwind.
-          Les champs bindables émettent <code class="bg-gray-100 px-1 rounded text-xs">input</code> et
-          <code class="bg-gray-100 px-1 rounded text-xs">change</code> pour Livewire.
+        <p>
+          Modèle <strong>headless</strong> : la factory retourne état + méthodes ; vous possédez le HTML/CSS.
+          Les champs bindables émettent <code>input</code> et <code>change</code> pour Livewire.
         </p>
-        <pre class="mt-4 p-4 bg-slate-100 border border-gray-200 rounded-xl text-xs overflow-x-auto text-gray-800"><code>src/components/   → apSelect, apDropdown, …
-src/data/         → catalog, phoneCountries
-src/utils/        → formatMoney, demoCopy
-src/main.js       → bootstrap Alpine</code></pre>
-        <p class="text-sm mt-4"><a href="/docs/architecture.md" class="text-indigo-600 hover:underline">docs/architecture.md</a></p>
+        <pre class="p-4 bg-slate-100 border border-gray-200 rounded-xl text-xs overflow-x-auto text-gray-800"><code>src/
+  components/   → apSelect, apDropdown, apInputText, apInputTags,
+                   apSwitch, apSlider, apForm, apInputMask, Toast
+  data/         → catalog, phoneCountries
+  utils/        → formatMoney, demoCopy
+  index.js      → exports npm
+  main.js       → playground de démo (non publié)</code></pre>
+
+        <h3 class="mt-6">Contrat d'un composant</h3>
+        <ul>
+          <li><code>export default function apXxx(config = {}) { … }</code></li>
+          <li>Valeurs par défaut via <code>??</code> (pas <code>||</code>)</li>
+          <li>Pas d'import Alpine — les factories sont de pures fonctions</li>
+          <li>Composants bindables : <code>$dispatch('input', val)</code> + <code>$dispatch('change', val)</code></li>
+        </ul>
       </section>
 
-      <section id="enregistrement">
-        <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Enregistrement Alpine</h2>
-        <pre class="mt-4 p-4 bg-gray-900 text-indigo-100 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>import Alpine from 'alpinejs';
-import apSelect from './components/Select.js';
-import { registerToastStore } from './components/Toast.js';
-
-registerToastStore(Alpine);
-Alpine.data('apSelect', apSelect);
-// … autres composants
-
-window.Alpine = Alpine;
-Alpine.start();</code></pre>
-        <p class="text-sm text-gray-500 mt-2">Référence complète : <code class="bg-gray-100 px-1 rounded">src/main.js</code></p>
-      </section>
-
+      <!-- LIAISON -->
       <section id="liaison">
         <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Liaison de données</h2>
-        <table class="w-full mt-4 text-sm border border-gray-200 rounded-xl overflow-hidden">
-          <thead class="bg-gray-50 text-left">
-            <tr><th class="px-4 py-2 font-semibold">Composant</th><th class="px-4 py-2 font-semibold">x-modelable</th></tr>
+        <p>Utilisez <code>x-modelable</code> sur le conteneur pour lier la valeur au parent ou à <code>wire:model.live</code>.</p>
+        <table>
+          <thead>
+            <tr><th>Composant</th><th>x-modelable</th><th>Événements émis</th></tr>
           </thead>
-          <tbody class="divide-y divide-gray-100 bg-white">
-            <tr><td class="px-4 py-2 font-mono text-indigo-700">apSelect</td><td class="px-4 py-2">value</td></tr>
-            <tr><td class="px-4 py-2 font-mono text-indigo-700">apInputText</td><td class="px-4 py-2">value</td></tr>
-            <tr><td class="px-4 py-2 font-mono text-indigo-700">apInputTags</td><td class="px-4 py-2">tags</td></tr>
-            <tr><td class="px-4 py-2 font-mono text-indigo-700">apSwitch</td><td class="px-4 py-2">value</td></tr>
-            <tr><td class="px-4 py-2 font-mono text-indigo-700">apSlider</td><td class="px-4 py-2">value</td></tr>
-            <tr><td class="px-4 py-2 font-mono text-indigo-700">apInputMask</td><td class="px-4 py-2">value</td></tr>
-            <tr><td class="px-4 py-2 font-mono text-indigo-700">apForm</td><td class="px-4 py-2">data.* via x-model</td></tr>
+          <tbody>
+            <tr><td>apSelect</td><td>value</td><td>input, change</td></tr>
+            <tr><td>apInputText</td><td>value</td><td>input, change</td></tr>
+            <tr><td>apInputTags</td><td>tags</td><td>input, change</td></tr>
+            <tr><td>apSwitch</td><td>value</td><td>input, change</td></tr>
+            <tr><td>apSlider</td><td>value</td><td>input, change</td></tr>
+            <tr><td>apInputMask</td><td>value</td><td>input, change, phone-change</td></tr>
+            <tr><td>apForm</td><td>data.*</td><td>via x-model</td></tr>
+            <tr><td>$store.toast</td><td>—</td><td>global store</td></tr>
           </tbody>
         </table>
       </section>
 
+      <!-- LIVEWIRE -->
+      <section id="livewire">
+        <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Livewire</h2>
+        <p>
+          Tous les composants dispatchent <code>input</code> et <code>change</code> à chaque changement de valeur —
+          ils sont nativement compatibles avec <code>wire:model.live</code>.
+          Placez <code>x-modelable</code> et <code>wire:model.live</code> sur le même élément conteneur.
+        </p>
+
+        <h3 class="mt-7">Select (simple ou multiple)</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>{{-- Composant Livewire --}}
+&lt;div
+    x-data="apSelect(@js(['options' => $options, 'multiple' => true]))"
+    x-modelable="value"
+    wire:model.live="selectedTechs"
+    @click.outside="close()"
+    class="ap-select"
+&gt;
+    &lt;button class="ap-select-trigger" :class="{ 'is-open': open }" @click="toggleOpen()"&gt;
+        &lt;div class="ap-select-tags" x-show="multiple &amp;&amp; hasValue"&gt;
+            &lt;template x-for="opt in selectedOptions" :key="opt.value"&gt;
+                &lt;span class="ap-select-tag"&gt;
+                    &lt;span class="ap-select-tag-label" x-text="opt.label"&gt;&lt;/span&gt;
+                    &lt;button type="button" class="ap-select-tag-remove" @click.stop="removeTag(opt.value, $event)"&gt;✕&lt;/button&gt;
+                &lt;/span&gt;
+            &lt;/template&gt;
+        &lt;/div&gt;
+        &lt;span class="ap-select-trigger-label" :class="{ 'is-placeholder': !hasValue }"
+              x-show="!multiple || !hasValue" x-text="display || placeholder"&gt;&lt;/span&gt;
+        &lt;svg class="ap-select-trigger-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;div class="ap-select-panel" x-show="open" x-cloak&gt;
+        &lt;ul class="ap-select-options"&gt;
+            &lt;template x-for="opt in filteredOptions" :key="opt.value"&gt;
+                &lt;li class="ap-select-option" :class="{ 'is-selected': isSelected(opt.value) }"
+                    @click="select(opt)" x-text="opt.label"&gt;&lt;/li&gt;
+            &lt;/template&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <h3 class="mt-7">Switch</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>&lt;div x-data="apSwitch()" x-modelable="value" wire:model.live="darkMode"&gt;
+    &lt;button type="button" @click="toggle()" :disabled="disabled"
+        class="ap-switch" :class="{ 'is-on': value }" role="switch" :aria-checked="value"&gt;
+        &lt;span class="ap-switch-thumb"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+
+        <h3 class="mt-7">Slider</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>&lt;div x-data="apSlider({ min: 0, max: 100 })" x-modelable="value" wire:model.live="volume"&gt;
+    &lt;div class="ap-slider"&gt;
+        &lt;input class="ap-slider-input" type="range"
+               x-model.number="value" @input="onInput($event)"
+               :min="min" :max="max" :step="step" :disabled="disabled"&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <h3 class="mt-7">InputTags</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>&lt;div x-data="apInputTags()" x-modelable="tags" wire:model.live="skills"&gt;
+    &lt;div class="ap-tags-wrapper" @click="$refs.tagInput.focus()"&gt;
+        &lt;template x-for="(tag, i) in tags" :key="i"&gt;
+            &lt;span class="ap-tag"&gt;
+                &lt;span class="ap-tag-label" x-text="tag"&gt;&lt;/span&gt;
+                &lt;button type="button" class="ap-tag-remove" @click.stop="removeTag(i)"&gt;✕&lt;/button&gt;
+            &lt;/span&gt;
+        &lt;/template&gt;
+        &lt;input x-ref="tagInput" x-model="input" class="ap-tags-input"
+               @keydown="onKeydown($event)" @blur="input.trim() &amp;&amp; addTag(input)"&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <h3 class="mt-7">apForm avec Livewire (erreurs 422)</h3>
+        <p><code>apForm</code> récupère automatiquement les erreurs de validation Laravel renvoyées en JSON (status 422)
+        et les affiche via <code>hasError()</code> / <code>getError()</code>.</p>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>{{-- Pré-remplir les erreurs issues d'un redirect Livewire --}}
+&lt;form class="ap-form"
+      x-data="apForm({
+          data: { name: '', email: '' },
+          errors: @json($errors-&gt;getMessages()),
+      })"
+      @submit.prevent="submit('{{ route('api.members.store') }}')"&gt;
+
+    &lt;div class="ap-form-field"&gt;
+        &lt;label class="ap-form-label is-required"&gt;Nom&lt;/label&gt;
+        &lt;input class="ap-input" :class="{ 'is-error': hasError('name') }"
+               x-model="data.name" placeholder="Jean Dupont"&gt;
+        &lt;p class="ap-form-error" x-show="hasError('name')" x-text="getError('name')"&gt;&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class="ap-form-success" x-show="success"&gt;✓ Membre enregistré.&lt;/div&gt;
+
+    &lt;button type="submit" class="ap-form-submit" :disabled="loading" :class="{ 'is-loading': loading }"&gt;
+        &lt;span x-show="!loading"&gt;Enregistrer&lt;/span&gt;
+        &lt;span x-show="loading"&gt;Envoi…&lt;/span&gt;
+    &lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+        <div class="mt-6 p-4 bg-indigo-50 border border-indigo-100 rounded-xl text-sm text-indigo-800">
+          <strong>Comment ça marche :</strong> chaque composant avec <code>x-modelable</code> observe sa propriété interne
+          (ex. <code>value</code>) et dispatche <code>input</code> + <code>change</code> via <code>$dispatch</code>.
+          Livewire intercepte ces événements DOM natifs — aucun code supplémentaire requis.
+        </div>
+
+        <p class="mt-4"><a href="/#livewire">Voir les exemples interactifs sur le playground →</a></p>
+      </section>
+
+      <!-- SKILL IA -->
+      <section id="skill">
+        <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Utiliser avec un agent IA</h2>
+        <p>
+          Le projet inclut un skill prêt à l'emploi avec tous les snippets copy-paste
+          et les classes <code>ap-*</code> pour tous les composants.
+        </p>
+
+        <h3 class="mt-6">Claude Code (dans ce projet)</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>/alpine-components</code></pre>
+        <p>Le skill génère instantanément les snippets HTML complets avec classes <code>ap-*</code>.</p>
+
+        <h3 class="mt-6">Claude Code (dans un projet consommateur)</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code># Télécharger le fichier de référence standalone
+curl -O https://raw.githubusercontent.com/momostifler96/alpine-components/master/alpine-components.md
+
+# Puis dans Claude Code, demandez au modèle de lire ce fichier :</code></pre>
+
+        <h3 class="mt-6">Cursor / Windsurf / GitHub Copilot</h3>
+        <pre class="p-4 bg-gray-900 text-indigo-100 rounded-xl text-sm overflow-x-auto"><code>@alpine-components.md  générer un formulaire avec apSelect et apForm</code></pre>
+
+        <h3 class="mt-6">Claude.ai / ChatGPT / autre LLM</h3>
+        <p>Joindre ou coller le contenu de <code>alpine-components.md</code> dans le contexte, puis formuler votre demande.</p>
+
+        <h3 class="mt-6">Contenu du fichier de référence</h3>
+        <p><code>alpine-components.md</code> contient pour chaque composant :</p>
+        <ul>
+          <li>Snippet HTML minimal (sans style)</li>
+          <li>Snippet complet avec classes <code>ap-*</code></li>
+          <li>Liste des props, état et méthodes</li>
+          <li>Combinaisons courantes (form + select, switch dans form…)</li>
+        </ul>
+      </section>
+
+      <!-- COMPOSANTS -->
       <section id="composants">
         <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Composants</h2>
-        <div class="mt-6 grid gap-4" x-data>
+        <table>
+          <thead>
+            <tr><th>Composant</th><th>Rôle</th><th>x-modelable</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>apSelect</td><td>Select simple/multiple avec préfixes, recherche, tags</td><td>value</td></tr>
+            <tr><td>apDropdown</td><td>Menu flottant avec auto-flip viewport</td><td>—</td></tr>
+            <tr><td>apInputText</td><td>Champ texte, password toggle, clearable, readonly</td><td>value</td></tr>
+            <tr><td>apInputTags</td><td>Saisie de tags — Entrée/virgule, backspace, coller</td><td>tags</td></tr>
+            <tr><td>apSwitch</td><td>Toggle booléen animé</td><td>value</td></tr>
+            <tr><td>apSlider</td><td>Curseur numérique avec tooltip et format personnalisé</td><td>value</td></tr>
+            <tr><td>apForm</td><td>État formulaire, fetch, erreurs 422 Laravel, CSRF</td><td>data.*</td></tr>
+            <tr><td>apInputMask</td><td>Masques téléphone, carte, SIRET, montant, pays</td><td>value</td></tr>
+            <tr><td>$store.toast</td><td>Notifications globales (success / error / warning / info)</td><td>—</td></tr>
+          </tbody>
+        </table>
+
+        <div class="mt-6 grid gap-3" x-data>
           <template x-for="item in $store.catalog.items" :key="item.id">
-            <a :href="'/' + '#' + item.id"
+            <a :href="'/#' + item.id"
               class="block p-4 bg-white border border-gray-200 rounded-xl hover:border-indigo-300 hover:shadow-sm transition-all">
               <div class="flex items-start justify-between gap-3">
                 <div>
                   <span class="font-mono text-sm text-indigo-600" x-text="item.slug"></span>
-                  <h3 class="font-semibold text-gray-900 mt-0.5" x-text="item.title"></h3>
+                  <h3 class="font-semibold text-gray-900 mt-0.5 text-sm" x-text="item.title"></h3>
                   <p class="text-sm text-gray-500 mt-1" x-text="item.description"></p>
                 </div>
-                <span class="text-xs text-gray-400 shrink-0" x-show="item.bind !== '—'" x-text="'× ' + item.bind"></span>
+                <div class="shrink-0 text-right">
+                  <span class="inline-block text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded bg-gray-100 text-gray-500"
+                    x-text="item.kind === 'store' ? 'store' : item.kind === 'utility' ? 'util' : 'data'"></span>
+                  <p class="text-xs text-gray-400 mt-1" x-show="item.bind !== '—'" x-text="'bind: ' + item.bind"></p>
+                </div>
               </div>
             </a>
           </template>
         </div>
-        <p class="text-sm mt-6"><a href="/docs/composants.md" class="text-indigo-600 hover:underline">docs/composants.md</a> — référence API détaillée.</p>
-      </section>
-
-      <section id="livewire">
-        <h2 class="text-xl font-bold border-b border-gray-200 pb-2">Livewire</h2>
-        <pre class="mt-4 p-4 bg-gray-900 text-indigo-100 rounded-xl text-xs overflow-x-auto"><code>&lt;div
-  x-data="apSelect(@js(['options' => $options]))"
-  x-modelable="value"
-  wire:model.live="field"
-  @click.outside="close()"
-&gt;
-  …
-&lt;/div&gt;</code></pre>
-        <p class="text-sm mt-4"><a href="/docs/livewire.md" class="text-indigo-600 hover:underline">docs/livewire.md</a></p>
-        <p class="text-sm mt-2"><a href="/#livewire" class="text-indigo-600 hover:underline">Exemples sur la landing →</a></p>
       </section>
 
     </article>
   </div>
 
-  <footer class="border-t border-gray-200 mt-16 py-8 text-center text-xs text-gray-400">
-    <a href="/" class="text-indigo-600 hover:underline">Retour au playground</a>
-    · Documentation Markdown dans <code>docs/</code>
+  <footer class="border-t border-gray-200 mt-16 py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
+      <div class="flex items-center gap-4">
+        <a href="/" class="text-indigo-600 hover:underline">← Retour au playground</a>
+        <a href="https://www.npmjs.com/package/@momoledev/alpine-components" target="_blank" class="hover:text-gray-600">npm</a>
+        <a href="https://github.com/momostifler96/alpine-components" target="_blank" class="hover:text-gray-600">GitHub</a>
+      </div>
+      <p>MIT · <a href="https://github.com/momostifler96" target="_blank" class="hover:text-gray-600">Momoledev</a></p>
+    </div>
   </footer>
 
   <script type="module" src="/src/main.js"></script>

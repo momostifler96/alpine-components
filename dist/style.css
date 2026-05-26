@@ -1,5 +1,5 @@
 /*
- * Alpine Components — Default Stylesheet v1.0.7
+ * Alpine Components — Default Stylesheet v1.0.8
  * Import: import '@momoledev/alpine-components/style'
  *
  * Toutes les classes sont optionnelles et remplaçables.
@@ -13,7 +13,7 @@
   --ap-primary:         #6366f1;
   --ap-primary-hover:   #4f46e5;
   --ap-primary-light:   #eef2ff;
-  --ap-primary-ring:    rgba(99, 102, 241, 0.25);
+  --ap-primary-ring:    #e0e7ff;
 
   --ap-border:          #e2e8f0;
   --ap-border-focus:    #6366f1;
@@ -38,13 +38,14 @@
   --ap-info:            #3b82f6;
   --ap-info-light:      #eff6ff;
 
-  --ap-radius:          0.5rem;
-  --ap-radius-sm:       0.375rem;
-  --ap-radius-lg:       0.75rem;
+  --ap-radius:          0.75rem;
+  --ap-radius-sm:       0.5rem;
+  --ap-radius-lg:       1rem;
   --ap-radius-full:     9999px;
 
-  --ap-shadow:          0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1);
-  --ap-shadow-sm:       0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1);
+  --ap-shadow:          0 10px 15px -3px rgb(0 0 0 / .08), 0 4px 6px -4px rgb(0 0 0 / .06);
+  --ap-shadow-sm:       0 1px 3px 0 rgb(0 0 0 / .08), 0 1px 2px -1px rgb(0 0 0 / .06);
+  --ap-shadow-xl:       0 20px 25px -5px rgb(0 0 0 / .1), 0 8px 10px -6px rgb(0 0 0 / .08);
 
   --ap-transition:      150ms ease;
   --ap-font-size:       0.875rem;
@@ -76,7 +77,7 @@
 .ap-input:focus,
 .ap-select-trigger:focus {
   border-color: var(--ap-border-focus);
-  box-shadow: 0 0 0 3px var(--ap-primary-ring);
+  box-shadow: 0 0 0 2px var(--ap-primary-ring);
 }
 
 .ap-input:disabled,
@@ -98,7 +99,7 @@
 }
 .ap-input.is-error:focus,
 .ap-select-trigger.is-error:focus {
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  box-shadow: 0 0 0 2px #fee2e2;
 }
 
 /* ══════════════════════════════════════════════
@@ -129,7 +130,7 @@
 
 .ap-input-wrapper:focus-within {
   border-color: var(--ap-border-focus);
-  box-shadow: 0 0 0 3px var(--ap-primary-ring);
+  box-shadow: 0 0 0 2px var(--ap-primary-ring);
 }
 
 .ap-input-addon {
@@ -309,10 +310,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.125rem 0.5rem;
+  padding: 0.125rem 0.375rem 0.125rem 0.5rem;
   background: var(--ap-primary-light);
   color: var(--ap-primary);
-  border-radius: var(--ap-radius-full);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--ap-radius-sm);
   font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
@@ -437,7 +439,7 @@
 
 .ap-tags-wrapper:focus-within {
   border-color: var(--ap-border-focus);
-  box-shadow: 0 0 0 3px var(--ap-primary-ring);
+  box-shadow: 0 0 0 2px var(--ap-primary-ring);
 }
 
 .ap-tags-wrapper.is-error {
@@ -448,10 +450,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.125rem 0.5rem;
+  padding: 0.25rem 0.375rem 0.25rem 0.625rem;
   background: var(--ap-primary-light);
   color: var(--ap-primary);
-  border-radius: var(--ap-radius-full);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--ap-radius-sm);
   font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
@@ -516,7 +519,7 @@
 
 .ap-switch:focus {
   outline: none;
-  box-shadow: 0 0 0 3px var(--ap-primary-ring);
+  box-shadow: 0 0 0 2px var(--ap-primary-ring);
 }
 
 .ap-switch:disabled {
@@ -601,11 +604,11 @@
 
 .ap-slider-input::-webkit-slider-thumb:hover {
   transform: scale(1.15);
-  box-shadow: 0 0 0 4px var(--ap-primary-ring);
+  box-shadow: 0 0 0 3px var(--ap-primary-ring);
 }
 
 .ap-slider-input:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 4px var(--ap-primary-ring);
+  box-shadow: 0 0 0 3px var(--ap-primary-ring);
 }
 
 .ap-slider-input::-moz-range-track {
@@ -658,7 +661,7 @@
 
 .ap-mask-wrapper:focus-within {
   border-color: var(--ap-border-focus);
-  box-shadow: 0 0 0 3px var(--ap-primary-ring);
+  box-shadow: 0 0 0 2px var(--ap-primary-ring);
 }
 
 .ap-mask-wrapper.is-error { border-color: var(--ap-border-error); }
@@ -830,7 +833,7 @@
 .ap-form-submit:hover { background: var(--ap-primary-hover); }
 
 .ap-form-submit:focus {
-  box-shadow: 0 0 0 3px var(--ap-primary-ring);
+  box-shadow: 0 0 0 2px var(--ap-primary-ring);
 }
 
 .ap-form-submit:disabled {
@@ -857,8 +860,8 @@
   right: 1.5rem;
   z-index: 9999;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-direction: column-reverse;
+  gap: 0.625rem;
   max-width: 22rem;
   width: 100%;
   pointer-events: none;
@@ -868,13 +871,25 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  padding: 0.875rem 1rem;
+  padding: 1rem;
   background: var(--ap-bg);
   border-radius: var(--ap-radius-lg);
-  box-shadow: var(--ap-shadow);
+  box-shadow: var(--ap-shadow-xl);
   border: 1px solid var(--ap-border);
   pointer-events: auto;
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+/* Icon wrapper — place a <div class="ap-toast-icon-wrapper"> around your icon SVG */
+.ap-toast-icon-wrapper {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.05rem;
 }
 
 .ap-toast-icon {
@@ -904,7 +919,7 @@
   display: inline-block;
   margin-top: 0.375rem;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 600;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -921,33 +936,54 @@
   padding: 0;
   color: var(--ap-text-muted);
   line-height: 1;
-  opacity: 0.6;
+  opacity: 0.5;
   margin-top: 0.1rem;
+  transition: opacity var(--ap-transition);
 }
 
 .ap-toast-dismiss:hover { opacity: 1; }
 
-/* Toast variants */
+/* Toast variants — colored border + matching shadow */
 .ap-toast-success {
-  border-left: 3px solid var(--ap-success);
+  border-color: #bbf7d0;
+  box-shadow: var(--ap-shadow-xl), 0 0 0 1px #bbf7d0;
 }
-.ap-toast-success .ap-toast-icon { color: var(--ap-success); }
+.ap-toast-success .ap-toast-icon-wrapper {
+  background: #dcfce7;
+  color: #16a34a;
+}
+.ap-toast-success .ap-toast-icon  { color: var(--ap-success); }
 .ap-toast-success .ap-toast-action { color: var(--ap-success); }
 
 .ap-toast-error {
-  border-left: 3px solid var(--ap-error);
+  border-color: #fecaca;
+  box-shadow: var(--ap-shadow-xl), 0 0 0 1px #fecaca;
 }
-.ap-toast-error .ap-toast-icon { color: var(--ap-error); }
+.ap-toast-error .ap-toast-icon-wrapper {
+  background: #fee2e2;
+  color: #dc2626;
+}
+.ap-toast-error .ap-toast-icon  { color: var(--ap-error); }
 .ap-toast-error .ap-toast-action { color: var(--ap-error); }
 
 .ap-toast-warning {
-  border-left: 3px solid var(--ap-warning);
+  border-color: #fde68a;
+  box-shadow: var(--ap-shadow-xl), 0 0 0 1px #fde68a;
 }
-.ap-toast-warning .ap-toast-icon { color: var(--ap-warning); }
+.ap-toast-warning .ap-toast-icon-wrapper {
+  background: #fef3c7;
+  color: #d97706;
+}
+.ap-toast-warning .ap-toast-icon  { color: var(--ap-warning); }
 .ap-toast-warning .ap-toast-action { color: var(--ap-warning); }
 
 .ap-toast-info {
-  border-left: 3px solid var(--ap-info);
+  border-color: #bfdbfe;
+  box-shadow: var(--ap-shadow-xl), 0 0 0 1px #bfdbfe;
 }
-.ap-toast-info .ap-toast-icon { color: var(--ap-info); }
+.ap-toast-info .ap-toast-icon-wrapper {
+  background: #dbeafe;
+  color: #2563eb;
+}
+.ap-toast-info .ap-toast-icon  { color: var(--ap-info); }
 .ap-toast-info .ap-toast-action { color: var(--ap-info); }
