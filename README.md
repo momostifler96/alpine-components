@@ -1,77 +1,168 @@
 # Alpine Components
 
-Bibliothèque **headless** de composants UI pour [Alpine.js](https://alpinejs.dev/) 3 et [Tailwind CSS](https://tailwindcss.com/) 4 — compatible [Livewire](https://livewire.laravel.com/).
+Bibliothèque **headless** de composants UI pour [Alpine.js](https://alpinejs.dev/) 3 — compatible [Livewire](https://livewire.laravel.com/) et Laravel.
 
-| | |
-|---|---|
-| **Playground** | `npm run dev` → [localhost:5173](http://localhost:5173) |
-| **Documentation web** | [/documentation.html](http://localhost:5173/documentation.html) |
-| **Docs Markdown** | [docs/README.md](./docs/README.md) |
+[![npm](https://img.shields.io/npm/v/@momoledev/alpine-components)](https://www.npmjs.com/package/@momoledev/alpine-components)
+[![license](https://img.shields.io/npm/l/@momoledev/alpine-components)](./LICENSE)
 
-## En bref
+**Documentation** → [alpine-components.momoledev.com](https://alpine-components.momoledev.com)
 
-- **9 briques** : Select, Dropdown, Input, Tags, Switch, Slider, Toast, InputMask, Form
-- **Headless** : logique JS + markup Tailwind de référence à copier
-- **Livewire** : `x-modelable` + `wire:model.live`
-- **Sans CSS imposé** : vous contrôlez le design
+---
 
-## Démarrage rapide
+## Composants
+
+| Composant | Rôle | x-modelable |
+|---|---|---|
+| `apSelect` | Select simple/multiple avec recherche | `value` |
+| `apDropdown` | Menu flottant avec auto-flip | — |
+| `apInputText` | Champ texte, password, clearable | `value` |
+| `apInputTags` | Saisie de tags | `tags` |
+| `apSwitch` | Toggle booléen | `value` |
+| `apSlider` | Curseur numérique avec tooltip | `value` |
+| `apForm` | État formulaire + submit fetch + erreurs 422 | `data` |
+| `apInputMask` | Masques : tel, carte, SIRET, money… | `value` |
+| `$store.toast` | Notifications globales (store Alpine) | — |
+
+---
+
+## Installation
 
 ```bash
-npm install
-npm run dev
+npm install @momoledev/alpine-components
 ```
 
-## Documentation
+---
 
-| Guide | Description |
-|-------|-------------|
-| [docs/README.md](./docs/README.md) | Index de la documentation |
-| [docs/installation.md](./docs/installation.md) | Installation et intégration |
-| [docs/architecture.md](./docs/architecture.md) | Philosophie et structure |
-| [docs/composants.md](./docs/composants.md) | Référence API |
-| [docs/livewire.md](./docs/livewire.md) | Intégration Livewire |
-| [docs/laravel.md](./docs/laravel.md) | Laravel + validation 422 |
-| [examples/laravel/](./examples/laravel/) | Exemple Blade / Controller / Form Request |
+## Intégration — JavaScript / TypeScript
 
-## Intégration minimale
+```ts
+import Alpine from 'alpinejs'
+import AlpineComponents from '@momoledev/alpine-components'
+
+Alpine.plugin(AlpineComponents)
+Alpine.start()
+```
+
+Importer uniquement certains composants :
+
+```ts
+import Alpine from 'alpinejs'
+import { apSelect, apForm, registerToastStore } from '@momoledev/alpine-components'
+
+registerToastStore(Alpine)
+Alpine.data('apSelect', apSelect)
+Alpine.data('apForm', apForm)
+Alpine.start()
+```
+
+---
+
+## Intégration — Laravel + Vite
+
+### 1. Installer le package
+
+```bash
+npm install @momoledev/alpine-components
+```
+
+### 2. Enregistrer dans `resources/js/app.js`
 
 ```js
-import Alpine from 'alpinejs';
-import apSelect from './components/Select.js';
-import { registerToastStore } from './components/Toast.js';
+import Alpine from 'alpinejs'
+import AlpineComponents from '@momoledev/alpine-components'
 
-registerToastStore(Alpine);
-Alpine.data('apSelect', apSelect);
-// … voir src/main.js
+Alpine.plugin(AlpineComponents)
 
-Alpine.start();
+window.Alpine = Alpine
+Alpine.start()
 ```
 
-```html
-<div x-data="apSwitch({ value: false })" x-modelable="value">
-  <!-- votre markup -->
-</div>
+### 3. Importer dans `vite.config.js`
+
+```js
+import { defineConfig } from 'vite'
+import laravel from 'laravel-vite-plugin'
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/js/app.js'],
+            refresh: true,
+        }),
+    ],
+})
 ```
 
-## Structure
+### 4. Charger les assets dans le layout Blade
 
+```blade
+{{-- resources/views/layouts/app.blade.php --}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
+    @yield('content')
+
+    {{-- Conteneur Toast --}}
+    <div x-data class="fixed bottom-4 right-4 z-50 space-y-2">
+        <template x-for="t in $store.toast.items" :key="t.id">
+            <div x-show="t.visible" x-transition x-text="t.message"></div>
+        </template>
+    </div>
+</body>
+</html>
 ```
-alpine-components/
-├── index.html              # Landing + playground
-├── documentation.html      # Doc navigateur
-├── docs/                   # Documentation Markdown
-└── src/
-    ├── main.js
-    ├── components/
-    ├── data/catalog.js
-    └── style.css
+
+### 5. Utiliser dans un formulaire Blade
+
+```blade
+{{-- resources/views/members/create.blade.php --}}
+<form x-data="apForm({
+    data: { name: '', email: '', role: null },
+    errors: @json($errors->getMessages()),
+})" @submit.prevent="submit('{{ route('members.store') }}')">
+
+    <input x-model="data.name" placeholder="Nom">
+    <p x-show="hasError('name')" x-text="getError('name')"></p>
+
+    <div x-data="apSelect({
+        options: [
+            { label: 'Développeur', value: 'dev' },
+            { label: 'Designer',    value: 'design' },
+        ],
+    })" x-modelable="value" x-model="data.role">
+        <button @click="toggle()" x-text="display || 'Choisir un rôle'"></button>
+        <ul x-show="open">
+            <template x-for="opt in filtered" :key="opt.value">
+                <li @click="select(opt)" x-text="opt.label"></li>
+            </template>
+        </ul>
+    </div>
+
+    <button type="submit" :disabled="loading">
+        <span x-show="!loading">Enregistrer</span>
+        <span x-show="loading">Envoi…</span>
+    </button>
+</form>
 ```
+
+> `apForm` lit le meta `csrf-token` automatiquement et gère les réponses **422** de Laravel.
+
+---
 
 ## Scripts
 
 | Commande | Action |
-|----------|--------|
-| `npm run dev` | Développement |
-| `npm run build` | Build production |
-| `npm run preview` | Prévisualiser le build |
+|---|---|
+| `npm run dev` | Dev playground |
+| `npm run build` | Build lib (ESM + UMD → `dist/`) |
+| `npm run docs:dev` | Dev VitePress |
+| `npm run docs:build` | Build docs statiques |
+
+## Licence
+
+MIT — [Momoledev](https://github.com/momostifler96)
