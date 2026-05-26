@@ -19,6 +19,7 @@
     "build": "vite build --config vite.lib.config.js",
     "build:demo": "vite build",
     "preview": "vite preview",
+    "deploy":"wrangler pages deploy dist --project-name=alpine-components",
     "prepublishOnly": "npm run build",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
