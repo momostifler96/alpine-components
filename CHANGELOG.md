@@ -5,6 +5,13 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versi
 
 ---
 
+## [1.0.6] — 2026-05-26
+
+### Fixed
+- `package.json` : champs `module` et `exports.import` corrigés de `dist/index.js` vers `dist/index.mjs` — résout l'erreur `packageEntryFailure` avec Vite 7 et pnpm
+
+---
+
 ## [1.0.5] — 2026-05-26
 
 ### Added
@@ -42,5 +49,6 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versi
 - `src/data/catalog.js` — métadonnées des composants pour la landing et la documentation
 - Playground interactif (`index.html`) et documentation navigateur (`documentation.html`)
 
+[1.0.6]: https://github.com/momostifler96/alpine-components/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/momostifler96/alpine-components/compare/v1.0.0...v1.0.5
 [1.0.0]: https://github.com/momostifler96/alpine-components/releases/tag/v1.0.0
