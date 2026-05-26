@@ -5,6 +5,15 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versi
 
 ---
 
+## [1.0.8] — 2026-05-26
+
+### Changed
+- Skill `/alpine-components` : règles rendues obligatoires — génération systématique avec classes `ap-*`, vérification de l'import du style, `x-cloak` et `@click.outside` imposés sur tous les panneaux
+- README : ajout du guide `@import '@momoledev/alpine-components/style';` dans `resources/css/app.css` (méthode recommandée Laravel)
+- `alpine-components.md` et `.claude/commands/alpine-components.md` synchronisés avec les nouvelles règles
+
+---
+
 ## [1.0.7] — 2026-05-26
 
 ### Added
@@ -67,6 +76,7 @@ Format basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), versi
 - `src/data/catalog.js` — métadonnées des composants pour la landing et la documentation
 - Playground interactif (`index.html`) et documentation navigateur (`documentation.html`)
 
+[1.0.8]: https://github.com/momostifler96/alpine-components/compare/v1.0.7...v1.0.8
 [1.0.7]: https://github.com/momostifler96/alpine-components/compare/v1.0.6...v1.0.7
 [1.0.6]: https://github.com/momostifler96/alpine-components/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/momostifler96/alpine-components/compare/v1.0.0...v1.0.5
