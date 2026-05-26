@@ -4,15 +4,51 @@ Interrupteur booléen.
 
 **x-modelable :** `value`
 
-## Usage
+## Usage minimal
 
 ```html
 <div x-data="apSwitch({ value: false })">
-  <button @click="toggle()" :disabled="disabled"
-          :class="value ? 'bg-blue-600' : 'bg-gray-200'">
-    <span :class="value ? 'translate-x-5' : 'translate-x-0'"
-          class="inline-block w-4 h-4 rounded-full bg-white transition"></span>
+  <button @click="toggle()" :disabled="disabled">
+    <span :style="`transform: translateX(${value ? '20px' : '0'})`"></span>
   </button>
+</div>
+```
+
+## Avec les classes `ap-*`
+
+```html
+<div x-data="apSwitch({ value: false })">
+  <button class="ap-switch" :class="{ 'is-on': value }"
+          @click="toggle()" :disabled="disabled" type="button"
+          :aria-checked="value" role="switch">
+    <span class="ap-switch-thumb"></span>
+  </button>
+</div>
+```
+
+### Avec libellé
+
+```html
+<div x-data="apSwitch({ value: true })" class="flex items-center gap-3">
+  <button class="ap-switch" :class="{ 'is-on': value }"
+          @click="toggle()" type="button">
+    <span class="ap-switch-thumb"></span>
+  </button>
+  <span x-text="value ? 'Activé' : 'Désactivé'"></span>
+</div>
+```
+
+### Avec x-modelable
+
+```html
+<div x-data="{ notifications: true }">
+  <div x-data="apSwitch()" x-modelable="value" x-model="notifications">
+    <button class="ap-switch" :class="{ 'is-on': value }"
+            @click="toggle()">
+      <span class="ap-switch-thumb"></span>
+    </button>
+  </div>
+  <p x-text="notifications ? 'Notifications activées' : 'Notifications désactivées'"></p>
 </div>
 ```
 
@@ -35,13 +71,11 @@ Interrupteur booléen.
 |---|---|
 | `toggle()` | Inverse l'état |
 
-## Avec x-modelable
+## Classes CSS
 
-```html
-<div x-data="{ actif: false }">
-  <div x-data="apSwitch()" x-modelable="value" x-model="actif">
-    <button @click="toggle()">...</button>
-  </div>
-  <span x-text="actif ? 'Actif' : 'Inactif'"></span>
-</div>
-```
+| Classe | Élément |
+|---|---|
+| `.ap-switch` | Bouton track |
+| `.ap-switch-thumb` | Pastille coulissante |
+
+**Modificateurs d'état :** `.is-on` (sur `.ap-switch`)
